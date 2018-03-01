@@ -351,6 +351,16 @@ function MainCtrl($http) {
     };
 };
 
+//DEfinicon de Controlador y lo declare en el final de esta pagina 
+ function FormaCtrl()
+ {
+  var CREARE=this;
+  this.Modalidades=[
+      {
+        Descripcion:"Bolso"
+      }];
+      
+ };
 
 /**
  * dashboardFlotOne - simple controller for data
@@ -3578,5 +3588,6 @@ angular
     .controller('jstreeCtrl', jstreeCtrl)
     .controller('datamapsCtrl', datamapsCtrl)
     .controller('pdfCtrl', pdfCtrl)
-    .controller('passwordMeterCtrl', passwordMeterCtrl);
+    .controller('passwordMeterCtrl', passwordMeterCtrl)
+    .controller('FormaCtrl',FormaCtrl);
 

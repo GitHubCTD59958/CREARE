@@ -26,22 +26,18 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         templateUrl: "views/common/content.html",
     })
 
-        .state('dashboards', {
-            abstract: true,
-            url: "/dashboards",
-            templateUrl: "views/common/content.html",
-        })
+   
         .state('CREARE.Forma', {
             url: "/Forma",
             templateUrl: "views/CREARE/Forma.html",
+            controller:"FormaCtrl",
+            controllerAs:"Forma",
             data: { pageTitle: 'Registro' },
             resolve: {
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            files: ['css/plugins/iCheck/custom.css','js/plugins/iCheck/icheck.min.js','css/plugins/bootstrapSocial/bootstrap-social.css']
-                   
-                           
+                            files: ['css/plugins/iCheck/custom.css','js/plugins/iCheck/icheck.min.js']
                         }
                     ]);
                 }
@@ -49,84 +45,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         })
 
     
-
-
-
-        .state('dashboards.dashboard_1', {
-            url: "/dashboard_1",
-            templateUrl: "views/dashboard_1.html",
-            resolve: {
-                loadPlugin: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        {
-
-                            serie: true,
-                            name: 'angular-flot',
-                            files: [ 'js/plugins/flot/jquery.flot.js', 'js/plugins/flot/jquery.flot.time.js', 'js/plugins/flot/jquery.flot.tooltip.min.js', 'js/plugins/flot/jquery.flot.spline.js', 'js/plugins/flot/jquery.flot.resize.js', 'js/plugins/flot/jquery.flot.pie.js', 'js/plugins/flot/curvedLines.js', 'js/plugins/flot/angular-flot.js', ]
-                        },
-                        {
-                            name: 'angles',
-                            files: ['js/plugins/chartJs/angles.js', 'js/plugins/chartJs/Chart.min.js']
-                        },
-                        {
-                            name: 'angular-peity',
-                            files: ['js/plugins/peity/jquery.peity.min.js', 'js/plugins/peity/angular-peity.js']
-                        }
-                    ]);
-                }
-            }
-        })
-        .state('dashboards.dashboard_2', {
-            url: "/dashboard_2",
-            templateUrl: "views/dashboard_2.html",
-            data: { pageTitle: 'Dashboard 2' },
-            resolve: {
-                loadPlugin: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        {
-                            serie: true,
-                            name: 'angular-flot',
-                            files: [ 'js/plugins/flot/jquery.flot.js', 'js/plugins/flot/jquery.flot.time.js', 'js/plugins/flot/jquery.flot.tooltip.min.js', 'js/plugins/flot/jquery.flot.spline.js', 'js/plugins/flot/jquery.flot.resize.js', 'js/plugins/flot/jquery.flot.pie.js', 'js/plugins/flot/curvedLines.js', 'js/plugins/flot/angular-flot.js' ]
-                        },
-                        {
-                            serie: true,
-                            files: ['js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js', 'js/plugins/jvectormap/jquery-jvectormap-2.0.2.css']
-                        },
-                        {
-                            serie: true,
-                            files: ['js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js']
-                        },
-                        {
-                            name: 'ui.checkbox',
-                            files: ['js/bootstrap/angular-bootstrap-checkbox.js']
-                        }
-                    ]);
-                }
-            }
-        })
-        .state('dashboards.dashboard_3', {
-            url: "/dashboard_3",
-            templateUrl: "views/dashboard_3.html",
-            data: { pageTitle: 'Dashboard 3' },
-            resolve: {
-                loadPlugin: function ($ocLazyLoad) {
-                    return $ocLazyLoad.load([
-                        {
-                            name: 'angles',
-                            files: ['js/plugins/chartJs/angles.js', 'js/plugins/chartJs/Chart.min.js']
-                        },
-                        {
-                            name: 'angular-peity',
-                            files: ['js/plugins/peity/jquery.peity.min.js', 'js/plugins/peity/angular-peity.js']
-                        },
-                        {
-                            name: 'ui.checkbox',
-                            files: ['js/bootstrap/angular-bootstrap-checkbox.js']
-                        }
-                    ]);
-                }
-            }
-        })
+      
         .state('dashboards_top', {
             abstract: true,
             url: "/dashboards_top",
@@ -156,6 +75,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
+        
         .state('dashboards.dashboard_4_1', {
             url: "/dashboard_4_1",
             templateUrl: "views/dashboard_4_1.html",
