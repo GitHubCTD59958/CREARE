@@ -4,7 +4,6 @@
  * Main controller.js file
  * Define controllers with data used in Inspinia theme
  *
- *
  * Functions (controllers)
  *  - MainCtrl
  *  - dashboardFlotOne
@@ -47,7 +46,6 @@
  *  - datamapsCtrl
  *  - pdfCtrl
  *  - passwordMeterCtrl
- *
  *
  */
 
@@ -352,14 +350,112 @@ function MainCtrl($http) {
 };
 
 //DEfinicon de Controlador y lo declare en el final de esta pagina 
- function FormaCtrl()
+ function FormaCtrl($scope)
  {
   var CREARE=this;
   this.Modalidades=[
       {
         Descripcion:"Bolso"
       }];
+
+      $scope.regisTrardato=function( )
+      {
+          alert($scope.Nombre);
+      }
+        $scope.Mipais=null
+      $scope.Paises =
+    [
+      {
+        Id_Pais:'1',
+        nombre:'Mexico'
+      },
+      {
+        Id_Pais:'2',
+        nombre:'Usa'
+      },
+      {
+        Id_Pais:'3',
+        nombre:'Alemania'
+      }
+    ]  
+      $scope.Ocupacion = 
+      [{
+        Id_Ocupacion: '1',
+        nombre: 'Estudiante'
+         },
+       {
+        Id_Ocupacion: '2',
+        nombre: 'Diseñador'
+          }
+      ]
+
+    $scope.patternNombre=/^[a-zA-Z]*$/;
+    
+    $scope.SleccionOcupacion = function() 
+    {
+        var Seleccion=$scope.MiOcupacion.nombre;
+        var Seleccion2=$scope.Mipais.nombre;
+        alert(Seleccion)
+        if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
+        {
+            alert(" Diseñador Mexicano"); 
+            $scope.Curp=true;
+          $scope.Marca=true;
+          $scope.Escuela=false;
+        }       
+       if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
+        {
+            alert(" Estudiante Mexicano"); 
+            $scope.Curp=true;
+            $scope.Escuela=true;
+            $scope.Marca=false;
+        }
+       if(Seleccion2!="Mexico")
+        {
+            if(Seleccion=="Estudiante")
+            {
+                alert(" Estudiante Extranjero"); 
+                $scope.Escuela=false;
+                $scope.Curp=false;
+                $scope.Marca=false;  
+            }
+            else
+            {
+                alert(" Diseñador Extranjero");
+              $scope.Escuela=false;
+              $scope.Curp=false;
+              $scope.Marca=true;
+            }
+        }
+    } 
+
+
+    $scope.SeleccionPais= function()
+    {
+        var Seleccion=$scope.Mipais.nombre;
+        alert(Seleccion);
+        if(Seleccion=!"Mexico")
+        {
+            $scope.Curp=false;
+        }      
+    }
+  
+
+    $scope.Mipais={
+        Id_Pais:1,
+        nombre:"Mexico"
+      }
       
+      //Leyenda Pagina Principal
+        $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
+        +"te pedimos poder contar con tu informacion real,por si llega a presentarse "
+        +"algún detalle con tu registro o pieza concursante nos estamos comunicando";
+
+       
+
+
+
+
  };
 
 /**
