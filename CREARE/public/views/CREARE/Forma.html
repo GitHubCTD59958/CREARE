@@ -45,7 +45,7 @@
                                </div>
                              <!-- -->
 
-                      <!-- ComboBox Curp-->
+       <!-- ComboBox Curp-->
                       <div ng-show="Curp"  class="form-group"><label class="col-sm-2 control-label"> <h3>Curp</h3>  <br/> </label>
                         <div>
                       <div  class="col-sm-10">
@@ -57,19 +57,20 @@
                           </div>   
                           </div>
                           <br> 
-                 <!-- -->
-                     <!-- Si Es Diseñador Aparecera El Div Para Su captura-->
+<!-- -->
+
+                     <!-- Div Marca -->
                                     <div ng-show="Marca"  class="form-group"><label class="col-sm-2 control-label"> <h3>Marca</h3> <small>   </small> <br/>
                                     </label>
                                           <div>
                                            <div  class="col-sm-10">
                                                   <h3><small><strong>  Nombre Marca</strong> </small></h3>
                                                   <label for="exampleInputEmail2" class="sr-only">Nombre</label>
-                                                   <input  type="text" ng-model="model.nombre" name="nombre" ng-pattern="patternNombre"
+                                                   <input  type="text" ng-model="marca" name="nombre" ng-pattern="patternNombre"
                                                    class="form-control">
                                                   <h3><small><strong>  RFC</strong> </small></h3>
-                                                  <label for="exampleInputEmail2" class="sr-only"><small> Apellido Paterno</small></label>
-                                                   <input type="email" placeholder="" id="exampleInputEmail2"
+                                                  <label for="exampleInputEmail2" class="sr-only"><small></small></label>
+                                                   <input type="text" placeholder="" ng-model="RFC"
                                                  class="form-control">
                                            </div>
                                         </div>
@@ -97,6 +98,9 @@
                                         </div>
                                 </div>
                      <!-- -->
+
+
+
                      <!-- Modalidades -->
                        <div class="form-group"><label class="col-sm-2 control-label"> <h3>Modalidades</h3>  <br/>
                                 </label>
@@ -209,7 +213,7 @@
                                     
                                                     </div>
                                             </div>
-                          <!--Como Te Enteraste--> 
+     <!--Como Te Enteraste--> 
                           <div class="form-group"><label class="col-sm-2 control-label">¿Como te enteraste?  <br/>
                          
                           </label>
@@ -231,6 +235,8 @@
                               </div>
                               
                           </div>
+
+ <!-- -->
                     
   <!-- Informacion -->
         <div class="form-group"><label class="col-sm-2 control-label">Informacion <br/>
@@ -245,9 +251,6 @@
                  <label class="btn btn-primary" ng-model="main.radioModel" uib-btn-radio="'Si'">SI</label>
                  <label class="btn btn-primary" ng-model="main.radioModel" uib-btn-radio="'No'">NO</label>
                      </div>
-         
-
-
                       <div>
                     <br><label>  ¿Te Gustaria Recibir Informacion del Mes De La Moda?</label></div>
                  <br>
@@ -262,7 +265,7 @@
             </div> 
 <!-- -->
     
-     <!-- Boton Regitro-->
+<!-- Boton Regitro-->
     <div class="text-right">
             <button class="btn btn-primary" ng-click="regisTrardato()" ><i class="fa fa-edit"></i> Registrar</button>
         </div>

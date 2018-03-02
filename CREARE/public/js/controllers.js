@@ -365,9 +365,10 @@ function MainCtrl($http) {
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.nombre;
         var Objeto=Seleccion+", "+Seleccion2+", "+ $scope.Nombre+", "+$scope.ApellidoPaterno+", "+
-         $scope.ApellidoMaterno+", "+$scope.Correo+", "+$scope.CorreoVerificacion+",Informacion CREARE: "+ $scope.main.radioModel+", Informacion MODA :"+$scope.btnModa;
+         $scope.ApellidoMaterno+", "+$scope.Correo+", "+$scope.CorreoVerificacion+",Informacion CREARE: "+ $scope.main.radioModel+", Informacion MODA :"+$scope.btnModa+",Marca  :"+$scope.marca+",RFC :"+$scope.RFC;
          alert(Objeto);
-        
+        alert($scope.main.checkFour);
+
       }
         $scope.Mipais=null
       $scope.Paises =
@@ -436,7 +437,6 @@ function MainCtrl($http) {
         }
     } 
 
-
     $scope.SeleccionPais= function()
     {
         var Seleccion=$scope.Mipais.nombre;
@@ -447,7 +447,6 @@ function MainCtrl($http) {
         }      
     }
   
-
     $scope.Mipais={
         Id_Pais:1,
         nombre:"Mexico"
@@ -459,9 +458,6 @@ function MainCtrl($http) {
         +"algún detalle con tu registro o pieza concursante nos estamos comunicando";
 
        
-
-
-
 
  };
 
