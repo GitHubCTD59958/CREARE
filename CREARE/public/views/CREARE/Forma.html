@@ -2,6 +2,7 @@
         <div class="col-lg-12">
             <div class="wrapper wrapper-content animated fadeInRight">
                 <div class="ibox-content p-xl">
+ <!-- Encabezado -->
                    <div class="row">
                          <h1>
                               <strong> <img alt="image" width="180" height="120" src="img/Creare.jpg"/> 
@@ -12,6 +13,7 @@
                          <p>{{Leyenda}}</p>
                          </div>        
                     </div>
+<!-- -->
                     <!--  ComboBox Pais -->
                        <div class="table-responsive m-t">
                          <div class="form-group"><label class="col-sm-2 control-label"><h3>Pais</h3></label>
@@ -22,8 +24,7 @@
                                 </select>
                             </div>
                         </div>
-                    <!-- -->
-                      
+                    <!-- -->     
                      <!-- ComboBox Ocupación-->
                        <div class="form-group"><label class="col-sm-2 control-label"><h3>Ocupación</h3></label>
                             <div class="col-sm-10">
@@ -53,12 +54,18 @@
                             <label for="exampleInputEmail2" class="sr-only">Nombre</label>
                              <input ng-model="Nombre" type="text" placeholder="" id="exampleInputEmail2"
                              class="form-control">
+                             <br>
+                             <button class="btn btn-primary" ng-click="" ><i class="fa fa-edit"></i> Consulta CURP</button>
+                            <br><br>
                             </div>   
-                          </div>   
+
+                            
+                          </div>
+                        
+                  
                           </div>
                           <br> 
 <!-- -->
-
                      <!-- Div Marca -->
                                     <div ng-show="Marca"  class="form-group"><label class="col-sm-2 control-label"> <h3>Marca</h3> <small>   </small> <br/>
                                     </label>
@@ -77,7 +84,6 @@
                                     </div>
                                     <br>
                      <!-- -->
-
                      <!-- Si es Estudiante Extarnjero Aparecera Para Capturar La Esxuela -->
                                     <div  hidden class="form-group"><label class="col-sm-2 control-label"> <h3>Escuela</h3> <small>   </small> <br/>
                                     </label>
@@ -98,9 +104,6 @@
                                         </div>
                                 </div>
                      <!-- -->
-
-
-
                      <!-- Modalidades -->
                        <div class="form-group"><label class="col-sm-2 control-label"> <h3>Modalidades</h3>  <br/>
                                 </label>
@@ -114,10 +117,8 @@
                                         <input icheck type="checkbox" ng-model="main.check1">
                                         Calzado  
                                             <input icheck type="checkbox" ng-model="main.check1">
-                                                Bolso
-                                                
+                                                Bolso                                               
                                     </div>
-                                    
                                 <!-- -->
                                 <!-- Categoria Caballero-->
                                     <br>
@@ -132,6 +133,7 @@
                                 <!-- -->    
                                     <br>
                                  <!-- Diseño -->
+         <!-- VErificacions -->    
                                     <h3>Diseño Utilitario y Arte</h3>
                                     <div> <input icheck type="checkbox" ng-model="main.check2">
                                         Accesorio
@@ -149,9 +151,10 @@
                         
                     
                                                        <h3><small><strong>Nombre</strong> </small> </h3>
-                                                       <div class="input-group m-b"><span class="input-group-addon"><img alt="image" width="20" height="20" src="img/user.jpg"/></span> <input ng-model="Nombre" type="text"
-                                                         placeholder=""
-                                                         class="form-control">
+                                                       <div class="input-group "><span class="input-group-addon"><img alt="image" width="20" height="20" src="img/user.jpg"/></span> 
+                                                        <input  ng-model="Nombre" ng-pattern="/^[0-9]{1,5}$/" required type="text" class="form-control">
+                                                      
+                                                            
                                                          </div>
 
                                                         <h3><small><strong>  Apellido Paterno</strong> </small></h3>
@@ -224,8 +227,9 @@
                                                     </div>
                                     
                                                     </div>
-                                            </div>
-     <!--Como Te Enteraste--> 
+                                            </div> 
+     <!-- -->
+  <!--Como Te Enteraste--> 
                           <div class="form-group"><label class="col-sm-2 control-label">¿Como te enteraste?  <br/>
                          
                           </label>
@@ -248,8 +252,7 @@
                               
                           </div>
 
- <!-- -->
-                    
+ <!-- -->      
   <!-- Informacion -->
         <div class="form-group"><label class="col-sm-2 control-label">Informacion <br/>
                 </label>
@@ -276,13 +279,13 @@
 
             </div> 
 <!-- -->
-    
 <!-- Boton Regitro-->
     <div class="text-right">
             <button class="btn btn-primary" ng-click="regisTrardato()" ><i class="fa fa-edit"></i> Registrar</button>
         </div>
                     </div>
-                    <!--RedesSociales -->
+<!-- -->
+<!--RedesSociales -->
                 <div class="well m-t"><strong>Redes Sociales</strong>
                     <div class="text-center">
                         <a class="btn btn-social-icon btn-facebook" ><span class="fa fa-facebook"></span></a>                
@@ -290,9 +293,7 @@
                         <a class="btn btn-social-icon btn-twitter" ><span class="fa fa-twitter"></span></a>
                     </div>
                 </div>
-
-                    <!-- /table-responsive -->
-                    
+<!-- -->
                 </div>
             </div>
         </div>

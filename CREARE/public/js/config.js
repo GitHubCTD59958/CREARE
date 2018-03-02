@@ -1002,6 +1002,8 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/validation.html",
             data: { pageTitle: 'Validation' }
         })
+
+        
         .state('miscellaneous.agile_board', {
             url: "/agile_board",
             templateUrl: "views/agile_board.html",

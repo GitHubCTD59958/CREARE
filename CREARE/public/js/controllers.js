@@ -385,7 +385,8 @@ function MainCtrl($http) {
         Id_Pais:'3',
         nombre:'Alemania'
       }
-    ]  
+    ]    
+    
       $scope.Ocupacion = 
       [{
         Id_Ocupacion: '1',
