@@ -358,21 +358,16 @@ function MainCtrl($http) {
         Descripcion:"Bolso"
       }];
 
+      //TODO :CREAR un if para ver la manera en que el objeto se realizara 
       $scope.regisTrardato=function( )
       {
         //Lugar donde Armamos el Objeto 
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.nombre;
-        var Objeto=Seleccion+", "+Seleccion2+", "+ $scope.Nombre;
-       
-       
-       
+        var Objeto=Seleccion+", "+Seleccion2+", "+ $scope.Nombre+", "+$scope.ApellidoPaterno+", "+
+         $scope.ApellidoMaterno+", "+$scope.Correo+", "+$scope.CorreoVerificacion+",Informacion CREARE: "+ $scope.main.radioModel+", Informacion MODA :"+$scope.btnModa;
          alert(Objeto);
-          alert($scope.Nombre);
-          alert($scope.ApellidoPaterno);
-          alert($scope.ApellidoMaterno);
-          alert($scope.Correo);
-          alert($scope.CorreoVerificacion);
+        
       }
         $scope.Mipais=null
       $scope.Paises =
