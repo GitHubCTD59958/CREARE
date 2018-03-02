@@ -34,6 +34,7 @@
                         </div>
                        </div>
                      <!-- -->
+                     
 
                          <!-- ComboBox <Escuelas-->
                            
@@ -55,7 +56,7 @@
                              <input ng-model="Nombre" type="text" placeholder="" id="exampleInputEmail2"
                              class="form-control">
                              <br>
-                             <button class="btn btn-primary" ng-click="" ><i class="fa fa-edit"></i> Consulta CURP</button>
+                             <button  class="btn btn-primary" ng-click="" ><i class="fa fa-edit"></i> Consulta CURP</button>
                             <br><br>
                             </div>   
 
@@ -85,7 +86,7 @@
                                     <br>
                      <!-- -->
                      <!-- Si es Estudiante Extarnjero Aparecera Para Capturar La Esxuela -->
-                                    <div  hidden class="form-group"><label class="col-sm-2 control-label"> <h3>Escuela</h3> <small>   </small> <br/>
+                                    <div   class="form-group"><label class="col-sm-2 control-label"> <h3>Escuela</h3> <small>   </small> <br/>
                                     </label>
                                     <div>
                                           <div  class="col-sm-10">
@@ -94,25 +95,21 @@
                                                   <label for="exampleInputEmail2" class="sr-only">Nombre</label>
                                                    <input type="email" placeholder="" id="exampleInputEmail2"
                                                  class="form-control">
-                                     
-                                                  <h3><small><strong>  RFC</strong> </small></h3>
-                                                  <label for="exampleInputEmail2" class="sr-only"><small> Apellido Paterno</small></label>
-                                                   <input type="email" placeholder="" id="exampleInputEmail2"
-                                                 class="form-control">
-                     
                                            </div>
                                         </div>
                                 </div>
                      <!-- -->
                      <!-- Modalidades -->
-                       <div class="form-group"><label class="col-sm-2 control-label"> <h3>Modalidades</h3>  <br/>
+                       <div class="form-group"><label class="col-sm-2 control-label"> 
+                         <br> <h3>Modalidades</h3>  <br/>
                                 </label>
                                  
                                  <div class="col-sm-10">
-    
+    <br>
                                  <!-- Categoria de Dama-->
                                     <h3>Dama</h3>
-                                    <div> <input icheck type="checkbox" ng-model="radioTestNextc" class="checkbox-circle">
+                                    <div>
+                                         <input icheck type="checkbox" ng-model="radioTestNextc" class="checkbox-circle">
                                         Prenda Vestir    
                                         <input icheck type="checkbox" ng-model="main.check1">
                                         Calzado  
@@ -169,9 +166,20 @@
                                                         placeholder=""
                                                         class="form-control">
                                                         </div>
+                                                        <div class="form-group" id="data_1">
+                                                                <label class="font-normal">Fecha de cumpleaños</label>
+                                                    
+                                                                <div class="input-group date">
+                                                                    <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                </div>
+                                                            </div>
 
-
-
+                                                            <h3><small><strong>Genero</strong> </small> </h3>
+                                                            <select class="form-control m-b" name="account">
+                                                                    <option>Hombre</option>
+                                                                    <option>Mujer</option>
+                                                            </select>
                                                       <h3><small><strong>Email</strong> </small> </h3>
                                                       <div class="input-group m-b"><span class="input-group-addon"><img alt="image" width="20" height="20" src="img/Micon.jpg"/></span> <input ng-model="Correo" type="text"
                                                         placeholder="Mail"
@@ -183,34 +191,36 @@
                                                         placeholder="Mail"
                                                         class="form-control">
                                                     </div>
-                                                    <h3><small><strong>Genero</strong> </small> </h3>
-                                                    <select class="form-control m-b" name="account">
-                                                            <option>Hombre</option>
-                                                            <option>Mujer</option>
-                                                    </select>
+
+                                                  
+
+                                                  
                                         
                                                 </div>
                                 
                                                 </div>
                                         </div>
+
                                         <div class="form-group"><label class="col-sm-2 control-label"> <h3>Datos</h3> <small> Recidenciales  </small> <br/> </label>
     
                                             <div>
                                                     <div class="col-sm-10">
-                            
-                                                            <h3><small><strong>  Calle</strong> </small></h3>
-                                                            <label for="exampleInputEmail2" class="sr-only"></label>
-                                                             <input type="email" placeholder="" id="exampleInputEmail2"
-                                                           class="form-control">
-                                                            <h3><small><strong>  Colonia</strong> </small></h3>
-                                                            <label for="exampleInputEmail2" class="sr-only"><small> </small></label>
-                                                             <input type="email" placeholder=" " id="exampleInputEmail2"
-                                                           class="form-control">
-                                                           <h3><small><strong>  Codigo Postal</strong> </small></h3>
-                                                           <label for="exampleInputEmail2" class="sr-only"></label>
-                                                            <input type="email" placeholder=" " id="exampleInputEmail2"
-                                                          class="form-control">
-                                                        
+                                                            <h3><small><strong>Calle</strong> </small> </h3>
+                                                            <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> <input   ng-model="CorreoVerificacion" type="text"
+                                                               placeholder=""
+                                                               class="form-control">
+                                                           </div>
+                                                           <h3><small><strong>Colonia</strong> </small> </h3>
+                                                           <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> <input   ng-model="CorreoVerificacion" type="text"
+                                                              placeholder=""
+                                                              class="form-control">
+                                                          </div>
+                                                          <h3><small><strong>Codigo Postal</strong> </small> </h3>
+                                                          <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> <input   ng-model="CorreoVerificacion" type="text"
+                                                             placeholder=""
+                                                             class="form-control">
+                                                         </div>
+                                                                                          
                                                          <div class="input-group m-b"> 
                                                         </div>
                                                         <h3><small><strong>Municipio</strong> </small> </h3>
@@ -228,6 +238,10 @@
                                     
                                                     </div>
                                             </div> 
+
+
+
+
      <!-- -->
   <!--Como Te Enteraste--> 
                           <div class="form-group"><label class="col-sm-2 control-label">¿Como te enteraste?  <br/>
@@ -235,30 +249,55 @@
                           </label>
   
                               <div class="col-sm-10">
-                                      <div><label> <input icheck type="radio" name="radioTest"
-                                          ng-model="main.checkFour"> Facebook </label></div>
-                                      <div><label> <input icheck type="radio" name="radioTest"
-                                          ng-model="main.checkFour"> Twitter </label></div>
-                                      <div><label> <input icheck type="radio" name="radioTest"
-                                          ng-model="main.checkFour">Conocido </label></div>
-                                  <div><label> <input icheck type="radio" name="radioTest"
-                                      ng-model="main.checkFour">Participante</label></div>
-                                  <div><label> <input icheck type="radio" name="radioTest"
-                                                                    ng-model="main.checkFour"> Escuela</label></div>
+                                      <br>
+                                      <br>
+                                          <label> <input icheck type="radio" name="radioTest"
+                                          ng-model="main.checkFour">   <i class="fa  fa-facebook-square"></i> Facebook </label>
+                                       
+                                          
+                                  <label> <input icheck type="radio" name="radioTest"
+                                          ng-model="main.checkFour"><i class="fa  fa-twitter-square"></i>  Twitter </label>
+                                        
+                                        
+                                      <label> <input icheck type="radio" name="radioTest"
+                                          ng-model="main.checkFour"><i class="fa  fa-twitter-square"></i>Conocido </label>
+
+                                  <label> <input icheck type="radio" name="radioTest"
+                                      ng-model="main.checkFour"><i class="fa  fa-twitter-square"></i>Participante</label>
+
+                                    <label> <input icheck type="radio" name="radioTest"
+                                        ng-model="main.checkFour"> <i class="fa  fa-twitter-square"></i>Escuela</label>
+
                                   <div><label> <input icheck type="radio" name="radioTest"
                                                                     ng-model="main.check8"> Otro</label>
                                   </div>
+                                 
+                                    <div>
+                                  <div  class="col-sm-10">
+                                        <h3><small><strong> Ingrese su  Descripcion</strong> </small></h3>
+                                        <label for="exampleInputEmail2" class="sr-only">Nombre</label>
+                                         <input ng-model="Nombre" type="text" placeholder="" id="exampleInputEmail2"
+                                         class="form-control">
+                                      </div>
+                                    
+                              <br>
+                                      </div>
+
+                                  
                               </div>
-                              
+                              <br>
                           </div>
 
  <!-- -->      
   <!-- Informacion -->
-        <div class="form-group"><label class="col-sm-2 control-label">Informacion <br/>
+
+        <div class="form-group">
+                <br><label class="col-sm-2 control-label">Informacion <br/>
                 </label>
 
                   <div class="col-sm-10">
                    <div>
+                        <br>
                  <label> ¿Te Gustaria Recibir Informacion de CREARE? </label>
                       </div>
                       <br>
@@ -285,15 +324,7 @@
         </div>
                     </div>
 <!-- -->
-<!--RedesSociales -->
-                <div class="well m-t"><strong>Redes Sociales</strong>
-                    <div class="text-center">
-                        <a class="btn btn-social-icon btn-facebook" ><span class="fa fa-facebook"></span></a>                
-                        <a class="btn btn-social-icon btn-google" ><span class="fa fa-google"></span></a>
-                        <a class="btn btn-social-icon btn-twitter" ><span class="fa fa-twitter"></span></a>
-                    </div>
-                </div>
-<!-- -->
+
                 </div>
             </div>
         </div>
