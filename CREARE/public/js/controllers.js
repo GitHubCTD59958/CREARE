@@ -360,7 +360,19 @@ function MainCtrl($http) {
 
       $scope.regisTrardato=function( )
       {
+        //Lugar donde Armamos el Objeto 
+        var Seleccion=$scope.MiOcupacion.nombre;
+        var Seleccion2=$scope.Mipais.nombre;
+        var Objeto=Seleccion+", "+Seleccion2+", "+ $scope.Nombre;
+       
+       
+       
+         alert(Objeto);
           alert($scope.Nombre);
+          alert($scope.ApellidoPaterno);
+          alert($scope.ApellidoMaterno);
+          alert($scope.Correo);
+          alert($scope.CorreoVerificacion);
       }
         $scope.Mipais=null
       $scope.Paises =
@@ -445,7 +457,7 @@ function MainCtrl($http) {
         Id_Pais:1,
         nombre:"Mexico"
       }
-      
+
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
         +"te pedimos poder contar con tu informacion real,por si llega a presentarse "
