@@ -37,14 +37,25 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            files: ['css/plugins/iCheck/custom.css','js/plugins/iCheck/icheck.min.js']
+                            files: ['js/plugins/sweetalert/sweetalert.min.js', 'css/plugins/sweetalert/sweetalert.css']
+                        },
+                        {
+                            files: ['css/plugins/iCheck/custom.css','js/plugins/iCheck/icheck.min.js','js/plugins/sweetalert/angular-sweetalert.min.js','js/plugins/sweetalert/sweetalert.min.js', 'css/plugins/sweetalert/sweetalert.css']
+                        },
+                        ,
+                        {
+                            name: 'oitozero.ngSweetAlert',
+                            files: ['js/plugins/sweetalert/angular-sweetalert.min.js']
                         }
+                     
                     ]);
                 }
             }
         })
 
-    
+        
+          
+      
       
         .state('dashboards_top', {
             abstract: true,
@@ -816,6 +827,8 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
+
+        
         .state('miscellaneous.socialbuttons', {
             url: "/socialbuttons",
             templateUrl: "views/socialbuttons.html",
@@ -830,6 +843,8 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
+
+
         .state('miscellaneous.code_editor', {
             url: "/code_editor",
             templateUrl: "views/code_editor.html",
@@ -849,6 +864,9 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
+
+
+
         .state('miscellaneous.modal_window', {
             url: "/modal_window",
             templateUrl: "views/modal_window.html",
@@ -1003,7 +1021,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             data: { pageTitle: 'Validation' }
         })
 
-        
+
         .state('miscellaneous.agile_board', {
             url: "/agile_board",
             templateUrl: "views/agile_board.html",

@@ -350,9 +350,32 @@ function MainCtrl($http) {
 };
 
 //DEfinicon de Controlador y lo declare en el final de esta pagina 
- function FormaCtrl($scope)
+ function FormaCtrl($scope,SweetAlert)
  {
   var CREARE=this;
+
+  $scope.registrarDatosforma = function () {
+  
+    SweetAlert.swal({
+            title: "Deseas Registrarte?",
+            text: "Tus Datos quedaran registrados de esta manera",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Si, Registrar!",
+            cancelButtonText: "No, Revisar Datos!",
+            closeOnConfirm: false,
+            closeOnCancel: false },
+        function (isConfirm) {
+            if (isConfirm) {
+                SweetAlert.swal("Registrado!", "Tus Datos han sido Registrados.", "success");
+            } else {
+                SweetAlert.swal("Cancelado", " :)", "error");
+            }
+        });
+}
+
+
   this.Modalidades=[
       {
         Descripcion:"Bolso"
@@ -370,6 +393,7 @@ function MainCtrl($http) {
         alert($scope.main.checkFour);
 
       }
+
         $scope.Mipais=null
       $scope.Paises =
     [
@@ -398,19 +422,35 @@ function MainCtrl($http) {
           }
       ]
 
-    $scope.patternNombre=/^[a-zA-Z]*$/;
+      //Inicializar los controladores Deshabilitados
+      $scope.desNombre=true;
+      $scope.desApPaterno=true;
+      $scope.desApMaterno=true;
+      $scope.desFecha=true;
+      $scope.desGenero=true;
+      $scope.desCalle=true;
+      $scope.descolonia=true;
+      $scope.desCodigop=true;
+
+
+
+     $scope.patternNombre=/^[a-zA-Z]*$/;
     
     $scope.SleccionOcupacion = function() 
     {
+        $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.nombre;
         alert(Seleccion)
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
             alert(" Diseñador Mexicano"); 
-            $scope.Curp=true;
+          $scope.Curp=true;
           $scope.Marca=true;
           $scope.Escuela=false;
+          $scope.ApPaterno=false;
+          $scope.Nombre=false;
+          
         }       
        if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
         {
@@ -437,7 +477,6 @@ function MainCtrl($http) {
             }
         }
     } 
-
     $scope.SeleccionPais= function()
     {
         var Seleccion=$scope.Mipais.nombre;
@@ -447,7 +486,6 @@ function MainCtrl($http) {
             $scope.Curp=false;
         }      
     }
-  
     $scope.Mipais={
         Id_Pais:1,
         nombre:"Mexico"
@@ -455,7 +493,7 @@ function MainCtrl($http) {
 
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
-        +"te pedimos poder contar con tu informacion real,por si llega a presentarse "
+        +" te pedimos poder contar con tu informacion real,por si llega a presentarse "
         +"algún detalle con tu registro o pieza concursante nos estamos comunicando";
 
        
