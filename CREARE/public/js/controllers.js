@@ -380,20 +380,6 @@ function MainCtrl($http) {
       {
         Descripcion:"Bolso"
       }];
-
-      //TODO :CREAR un if para ver la manera en que el objeto se realizara 
-      $scope.regisTrardato=function( )
-      {
-        //Lugar donde Armamos el Objeto 
-        var Seleccion=$scope.MiOcupacion.nombre;
-        var Seleccion2=$scope.Mipais.nombre;
-        var Objeto=Seleccion+", "+Seleccion2+", "+ $scope.Nombre+", "+$scope.ApellidoPaterno+", "+
-         $scope.ApellidoMaterno+", "+$scope.Correo+", "+$scope.CorreoVerificacion+",Informacion CREARE: "+ $scope.main.radioModel+", Informacion MODA :"+$scope.btnModa+",Marca  :"+$scope.marca+",RFC :"+$scope.RFC;
-         alert(Objeto);
-        alert($scope.main.checkFour);
-
-      }
-
         $scope.Mipais=null
       $scope.Paises =
     [
@@ -410,7 +396,6 @@ function MainCtrl($http) {
         nombre:'Alemania'
       }
     ]    
-    
       $scope.Ocupacion = 
       [{
         Id_Ocupacion: '1',
@@ -421,83 +406,137 @@ function MainCtrl($http) {
         nombre: 'Diseñador'
           }
       ]
-
       //Inicializar los controladores Deshabilitados
-      $scope.desNombre=true;
-      $scope.desApPaterno=true;
-      $scope.desApMaterno=true;
-      $scope.desFecha=true;
-      $scope.desGenero=true;
-      $scope.desCalle=true;
-      $scope.descolonia=true;
-      $scope.desCodigop=true;
+      $scope.desNombre=true;$scope.desApPaterno=true;
+      $scope.desApMaterno=true;$scope.desFecha=true;
+      $scope.desGenero=true;$scope.desCalle=true;$scope.descolonia=true;
+      $scope.desCodigop=true;$scope.Mail1=true;$scope.Mail2=true;
+      $scope.desMunicipio=true;$scope.desEstado=true;$scope.desBoton=true;
+      $scope.desSi=true;$scope.desNo=true;$scope.desSi2=true;
+      $scope.desNo2=true;$scope.facebook=true;$scope.Twitter=true;
+      $scope.Conocido=true;$scope.Participante=true;
+      $scope.Escuela=true;$scope.otro=true;
+      $scope.desModalidades=false;
 
+function Activar()
+{
+    $scope.Curp=true;
+    $scope.Marca=true;
+    $scope.shwEscuela=false;
+   $scope.desBoton=false;
+   $scope.Escuela=false;
+   $scope.desModalidades=true;  
+}
+function DatoRecidencial()
+{
+    $scope.desCalle=false;
+    $scope.descolonia=false;
+    $scope.desCodigop=false;
+    $scope.desMunicipio=false;
+    $scope.desEstado=false;
+    $scope.Mail1=false;
+    $scope.Mail2=false;
+}
+function RedesSociales()
+{ 
+    $scope.otro=false;
+    $scope.facebook=false;
+    $scope.Twitter=false;
+    $scope.Conocido=false;
+    $scope.Participante=false;
+    $scope.desSi=false;
+    $scope.desNo=false;
+    $scope.desSi2=false;
+    $scope.desNo2=false;
+}
 
+function EstudianteExtranjero()
+{      $scope.Es=true;
+    $scope.Marca=false;
+    $scope.Curp=false;
+    $scope.desNombre=false;$scope.desApPaterno=false;
+    $scope.desApMaterno=false;$scope.desFecha=false;
+    $scope.desGenero=false;$scope.desCalle=false;$scope.descolonia=false;
+    $scope.desCodigop=false;$scope.Mail1=false;$scope.Mail2=false;
+    $scope.desMunicipio=false;$scope.desEstado=false;$scope.desBoton=false;
+    $scope.desSi=false;$scope.desNo=false;$scope.desSi2=false;
+    $scope.desNo2=false;$scope.facebook=false;$scope.Twitter=false;
+    $scope.Conocido=false;$scope.Participante=false;
+    $scope.Escuela=false;$scope.otro=false;
+    $scope.desModalidades=true;
+    $scope.desFecha=false;
+}
 
-     $scope.patternNombre=/^[a-zA-Z]*$/;
-    
+function DiseñadorExtranjero()
+{
+    $scope.Curp=false;
+    $scope.Marca=true;
+    $scope.desNombre=false;$scope.desApPaterno=false;
+    $scope.desApMaterno=false;$scope.desFecha=false;
+    $scope.desGenero=false;$scope.desCalle=false;$scope.descolonia=false;
+    $scope.desCodigop=false;$scope.Mail1=false;$scope.Mail2=false;
+    $scope.desMunicipio=false;$scope.desEstado=false;$scope.desBoton=false;
+    $scope.desSi=false;$scope.desNo=false;$scope.desSi2=false;
+    $scope.desNo2=false;$scope.facebook=false;$scope.Twitter=false;
+    $scope.Conocido=false;$scope.Participante=false;
+    $scope.Escuela=true
+    ;$scope.otro=false;
+    $scope.desModalidades=true;
+}
+    $scope.patternNombre=/^[a-zA-Z]*$/;
     $scope.SleccionOcupacion = function() 
     {
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.nombre;
-        alert(Seleccion)
+        
+
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
             alert(" Diseñador Mexicano"); 
-          $scope.Curp=true;
-          $scope.Marca=true;
-          $scope.Escuela=false;
-          $scope.ApPaterno=false;
-          $scope.Nombre=false;
-          
+            Activar(); RedesSociales(); DatoRecidencial();
         }       
        if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
         {
             alert(" Estudiante Mexicano"); 
+            $scope.desModalidades=true;
             $scope.Curp=true;
-            $scope.Escuela=true;
-            $scope.Marca=false;
+            $scope.shwEscuela=true;
+            $scope.Marca=false;    
+            RedesSociales(); DatoRecidencial();
         }
+
        if(Seleccion2!="Mexico")
         {
             if(Seleccion=="Estudiante")
             {
                 alert(" Estudiante Extranjero"); 
-                $scope.Escuela=false;
-                $scope.Curp=false;
-                $scope.Marca=false;  
+                // $scope.Escuela=false;
+                //$scope.Curp=false;
+                EstudianteExtranjero();
             }
             else
             {
                 alert(" Diseñador Extranjero");
-              $scope.Escuela=false;
-              $scope.Curp=false;
-              $scope.Marca=true;
+             // $scope.Escuela=false;
+              //$scope.Curp=false;
+              DiseñadorExtranjero();
             }
         }
     } 
     $scope.SeleccionPais= function()
     {
         var Seleccion=$scope.Mipais.nombre;
-        alert(Seleccion);
-        if(Seleccion=!"Mexico")
-        {
-            $scope.Curp=false;
-        }      
+        alert(Seleccion);        
     }
     $scope.Mipais={
         Id_Pais:1,
         nombre:"Mexico"
       }
-
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
         +" te pedimos poder contar con tu informacion real,por si llega a presentarse "
         +"algún detalle con tu registro o pieza concursante nos estamos comunicando";
-
-       
-
  };
 
 /**

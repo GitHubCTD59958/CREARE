@@ -47,16 +47,11 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                             name: 'oitozero.ngSweetAlert',
                             files: ['js/plugins/sweetalert/angular-sweetalert.min.js']
                         }
-                     
                     ]);
                 }
             }
         })
-
-        
-          
-      
-      
+                
         .state('dashboards_top', {
             abstract: true,
             url: "/dashboards_top",
