@@ -14,8 +14,8 @@
                        <div class="table-responsive m-t">
                          <div class="form-group " ><label class="col-sm-2 control-label"><h3>Pais</h3></label>
                                 <div class="col-sm-10">
-                                <select  ng-model="Mipais" ng-change="SeleccionPais()" class="form-control m-b" name="Pais"
-                                ng-options="pais as pais.nombre for pais in Paises track by pais.Id_Pais">
+                                <select  ng-model="Mipais" ng-change="SeleccionPais()" ng-init="ListaPaises()" class="form-control m-b" name="Pais"
+                                ng-options="pais as pais.descripcion for pais in Paises track by pais.keyID">
                                     <option></option>
                                 </select>
                             </div>
@@ -33,7 +33,7 @@
 <!-- ComboBox <Escuelas-->
                                 <div ng-show="shwEscuela" class="form-group"><label class="col-sm-2 control-label"><h3>Escuela</h3></label>
                                     <div class="col-sm-10">
-                                    <select ng-model="MiOcupacion" ng-change="SleccionOcupacion()" ng-options="ocupacion as ocupacion.nombre for ocupacion in Ocupacion track by ocupacion.Id_Ocupacion" class="form-control m-b" name="account">
+                                    <select ng-model="Miuniversidad"  ng-options="Universidad as Universidad.univ_Nombre for Universidad in Universidades track by Universidad.univ_ID" class="form-control m-b" name="account">
                                         <option></option>
                                     </select>
                                 </div>
@@ -45,10 +45,10 @@
                       <div  class="col-sm-10">
                             <h3><small><strong> Ingrese su  Curp</strong> </small></h3>
                             <label for="exampleInputEmail2" class="sr-only">Nombre</label>
-                             <input ng-model="Nombre" type="text" placeholder="" id="exampleInputEmail2"
-                             class="form-control">
+                             <input ng-model="ClaveCURP" type="text" placeholder="" id="exampleInputEmail2" ng-maxlength="13" ng-minlength="11"
+                             class="form-control" >
                              <br>
-                             <button  class="btn btn-primary dim" ng-click="" ><i class="fa fa-edit"></i> Consulta CURP</button>
+                             <button  class="btn btn-primary dim" ng-click="ConsultarCURP()" ><i class="fa fa-edit"></i> Consulta CURP</button>
                             <br><br>
                             </div>   
                           </div>
@@ -94,22 +94,22 @@
                                  <!-- Categoria de Dama-->
                                     <h3>Dama</h3>
                                     <div>
-                                         <input icheck type="checkbox" ng-model="radioTestNextc" class="checkbox-circle">
+                                         <input icheck type="checkbox" ng-model="DPrendaVestir" class="checkbox-circle">
                                         Prenda Vestir    
-                                        <input icheck type="checkbox" ng-model="main.check1">
+                                        <input icheck type="checkbox" ng-model="DCalzado">
                                         Calzado  
-                                            <input icheck type="checkbox" ng-model="main.check1">
+                                            <input icheck type="checkbox" ng-model="DBolso">
                                                 Bolso                                               
                                     </div>
                                 <!-- -->
                                 <!-- Categoria Caballero-->
                                     <br>
                                     <h3>Caballero</h3>
-                                    <div> <input icheck type="checkbox" ng-model="main.check2" >
+                                    <div> <input icheck type="checkbox" ng-model="CPrendaVestir" >
                                         Prenda Vestir
-                                    <input icheck type="checkbox" ng-model="main.check2">
+                                    <input icheck type="checkbox" ng-model="CCalzado">
                                     Calzado
-                                        <input icheck type="checkbox" ng-model="main.check2">
+                                        <input icheck type="checkbox" ng-model="CBackpack">
                                                 BackPack
                                     </div>
                                 <!-- -->    
@@ -117,9 +117,9 @@
                                  <!-- Diseño -->
          <!-- VErificacion  -->    
                                     <h3>Diseño Utilitario y Arte</h3>
-                                    <div> <input icheck type="checkbox" ng-model="main.check2">
+                                    <div> <input icheck type="checkbox" ng-model="DUAccesorio">
                                         Accesorio
-                                        <input icheck type="checkbox" ng-model="main.check2">
+                                        <input icheck type="checkbox" ng-model="DUMobiliario">
                                         Mobiliario
                                     </div>
                                     <br>
@@ -139,19 +139,19 @@
                                                         <span class="input-group-addon">
                                                         <img alt="image" width="15" height="15" src="img/user.jpg"/>
                                                         </span> 
-                                                        <input  ng-disabled="desNombre"  ng-model="campo.Nombre" ng-pattern="/^[0-9]{1,5}$/"  type="text" class="form-control">
+                                                        <input  ng-disabled="desNombre"  ng-model="campoNombre" ng-pattern="/^[0-9]{1,5}$/"  type="text" class="form-control">
                                                          </div>
                                                          <!-- Campo Apellido Paterno-->
                                                         <h3><small><strong>  Apellido Paterno</strong> </small></h3>
                                                         <div class="input-group m-b"><span class="input-group-addon"><img alt="image" width="15" height="15" src="img/user.jpg"/></span> 
-                                                            <input ng-disabled="desApPaterno"  ng-model="campo.ApellidoPaterno" type="text"
+                                                            <input ng-disabled="desApPaterno"  ng-model="campoApellidoPaterno" type="text"
                                                             placeholder=""
                                                             class="form-control">
                                                             </div>
                                                          <!-- Campo Apellido Materno-->
                                                        <h3><small><strong>  Apellido Materno</strong> </small></h3>                                   
                                                       <div class="input-group m-b"><span class="input-group-addon"><img alt="image" width="15" height="15" src="img/user.jpg"/></span> 
-                                                        <input ng-model="campo.ApellidoMaterno" type="text" ng-disabled="desApMaterno"  class="form-control">
+                                                        <input ng-model="campoApellidoMaterno" type="text" ng-disabled="desApMaterno"  class="form-control">
                                                         </div>
                                                         <!-- Campo Fecha Cumpleaños-->
                                                         <div  class="form-group" id="data_1">
@@ -163,21 +163,22 @@
                                                             </div>
                                                             <!-- Combobox Genero-->
                                                             <h3><small><strong>Genero</strong> </small> </h3>
-                                                            <select ng-disabled="desGenero" class="form-control m-b" name="account">
-                                                                    <option>Hombre</option>
-                                                                    <option>Mujer</option>
+                                                            <select ng-model="campoSexo"ng-disabled="desGenero" class="form-control m-b" name="account">
+                                                                    <option value="H">Hombre</option>
+                                                                    <option  value="M">Mujer</option>
                                                             </select>
+
                                                             <!--Campo Email-->
                                                       <h3><small><strong>Email</strong> </small> </h3>
                                                       <div class="input-group m-b"><span class="input-group-addon"><img alt="image" width="15" height="15" src="img/Micon.jpg"/></span> 
-                                                        <input ng-model="campo.Correo" type="text" ng-disabled="Mail1" 
+                                                        <input ng-model="campoCorreo" type="text" ng-disabled="Mail1" 
                                                         placeholder="Mail"
                                                         class="form-control">
                                                         </div>
                                                             <!--Campo Email2   -->
-                                                     <h3><small><strong>Email</strong> </small> </h3>
+                                                     <h3><small><strong> Confirmacion Email</strong> </small> </h3>
                                                      <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="15" height="15" src="img/Micon.jpg"/> </span> 
-                                                        <input   ng-model="campo.CorreoVerificacion" type="text" ng-disabled="Mail2" 
+                                                        <input   ng-model="campoCorreoVerificacion" type="text" ng-disabled="Mail2" 
                                                         placeholder="Mail"
                                                         class="form-control">
                                                     </div>                                                  
@@ -193,46 +194,47 @@
                                                     <div class="col-sm-10">
                                                             <h3><small><strong>Calle</strong> </small> </h3>
                                                             <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span>
-                                                                 <input   ng-model="campo.Calle" type="text" ng-disabled="desCalle" 
+                                                                 <input   ng-model="campoCalle" type="text" ng-disabled="desCalle" 
                                                                placeholder=""
                                                                class="form-control">
                                                            </div>
                                                            <h3><small><strong>Numero</strong> </small> </h3>
                                                            <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> 
-                                                            <input   ng-model="campo.Colonia" type="text" ng-disabled="descolonia" 
+                                                            <input   ng-model="campoColonia" type="text" ng-disabled="descolonia" 
                                                               placeholder=""
                                                               class="form-control">
                                                           </div>
                                                            <h3><small><strong>Colonia</strong> </small> </h3>
                                                            <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> 
-                                                            <input   ng-model="campo.Colonia" type="text" ng-disabled="descolonia" 
+                                                            <input   ng-model="campoColonia" type="text" ng-disabled="descolonia" 
                                                               placeholder=""
                                                               class="form-control">
                                                           </div>
                                                           <h3><small><strong>Codigo Postal</strong> </small> </h3>
                                                           <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/Location.jpg"/> </span> 
-                                                            <input   ng-model="campo.Codigopostal" type="text" ng-disabled="desCodigop" 
+                                                            <input   ng-model="campoCodigopostal" type="text" ng-disabled="desCodigop" 
                                                              placeholder=""
                                                              class="form-control">
                                                          </div>      
                                                           <h3><small><strong>Telefono</strong> </small> </h3>
                                                           <div class="input-group m-b"><span class="input-group-addon"> <img alt="image" width="20" height="20" src="img/tel.jpg"/> </span> 
-                                                            <input   ng-model="campo.Codigopostal" type="text" ng-disabled="desCodigop" 
+                                                            <input   ng-model="campoCodigopostal" type="text" ng-disabled="desCodigop" 
                                                              placeholder=""
                                                              class="form-control">
                                                          </div>                                                                                        
                                                          <div class="input-group m-b"> 
                                                         </div>
-                                                        <h3><small><strong>Municipio</strong> </small> </h3>
-                                                        <select ng-disabled="desMunicipio"  class="form-control m-b" name="account">
-                                                                <option>Hombre</option>
-                                                                <option>Mujer</option>
-                                                            </select>
+                                                
                                                             <h3><small><strong>Estado</strong> </small> </h3>
-                                                            <select ng-disabled="desEstado"  class="form-control m-b" name="account">
-                                                                    <option>Hombre</option>
-                                                                    <option>Mujer</option>
+                                                            <select ng-disabled="desEstado" ng-change="ListaMunicipios()"  ng-model="Miestado" class="form-control m-b" name="account" ng-options="Estado as Estado.nombre for Estado in Estados track by Estado.keyID">
+                                                                    <option ></option>
                                                                 </select>
+                                                                <h3><small><strong>Municipio</strong> </small> </h3>
+                                                                <select ng-disabled="desMunicipio" ng-model="Mimunicipio"  ng-options="Municipio as Municipio.nombre for Municipio in Municipios track by Municipio.keyID"class="form-control m-b" name="account">
+                                                                        <option>Hombre</option>
+                                                                        <option>Mujer</option>
+                                                                    </select>
+
                                                         </div>
                                                     </div>
                                             </div> 

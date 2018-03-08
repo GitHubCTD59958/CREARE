@@ -349,31 +349,204 @@ function MainCtrl($http) {
     };
 };
 
-//DEfinicon de Controlador y lo declare en el final de esta pagina 
- function FormaCtrl($scope,SweetAlert)
+function FormaCtrl($scope, SweetAlert, $http)
  {
   var CREARE=this;
 
+  //Constructor de las variables para los checkBox, ya que ANGULAR los muestra como undefined si no se declaran y no se seleccionan en algun momento
+
+    $scope.Constructor= function(){
+        $scope.Miuniversidad="";
+        $scope.marca="";
+        $scope.campoRFC="";
+        $scope.DBolso=false;
+        $scope.CBackpack=false;
+        $scope.DPrendaVestir=false;
+        $scope.CPrendaVestir=false;
+        $scope.DCalzado=false;
+        $scope.CCalzado=false;
+        $scope.DUMobiliario=false;
+        $scope.DUAccesorio=false;
+        $scope.campoLada=false;
+        $scope.CFacebook=false;
+        $scope.CTwitter=false;
+        $scope.CConocido=false;
+        $scope.CParticipante=false;
+        $scope.CEscuela=false;
+        $scope.COtro=false;
+        $scope.ODescripcion="";
+    }
+
+  //Llenado de los ComboBox con informacion de la base de datos
+
+  $scope.ListaUniversidades= function(){
+      $http.get('http://localhost/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
+      .success(function(Resultado){
+          $scope.Universidades=Resultado;
+      })
+      .error(function(err){
+          console.log(err);
+      })
+  }
+        
+    $scope.ListaPaises= function(){
+        $scope.Mipais={};
+        $http.get('http://201.144.43.184/API.Core/Paises/v1/GetPaisCatalog')
+        .success(function(Resultado){
+            $scope.Paises=Resultado;
+            $scope.Mipais.keyID="700";
+            $scope.Mipais.descripcion="Mexico";
+        })
+        .error(function(err){
+            console.log(err);
+        })
+    }
+
+    $scope.ListaEstados= function(){
+        $http.get('http://201.144.43.184/API.Core/Entidades/v1/GetEntidadCatalog')
+        .success(function(Resultado){
+            $scope.Estados=Resultado;
+        })
+        .error(function(err){
+            console.log(err);
+        })
+    }
+
+    $scope.ConsultarCURP= function(){
+        $http.get('http://201.144.43.183/API.RENAPO/Renapo/v1/GetRenapo/' + $scope.ClaveCURP)
+          .success(function(Resultado){
+               $scope.campoNombre=Resultado.nombres;
+               $scope.campoApellidoPaterno=Resultado.primerApellido;
+               $scope.campoApellidoMaterno=Resultado.segundoApellido;
+               $scope.campoSexo=Resultado.sexo;
+               $scope.sampleDate=Resultado.fechNac;
+          })
+          .error(function(err){
+              console.log(err);
+          });
+    }
+
   $scope.registrarDatosforma = function () {
-  
-    SweetAlert.swal({
-            title: "Deseas Registrarte?",
-            text: "Tus Datos quedaran registrados de esta manera",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Si, Registrar!",
-            cancelButtonText: "No, Revisar Datos!",
-            closeOnConfirm: false,
-            closeOnCancel: false },
-        function (isConfirm) {
-            if (isConfirm) {
-                SweetAlert.swal("Registrado!", "Tus Datos han sido Registrados.", "success");
-            } else {
-                SweetAlert.swal("Cancelado", " :)", "error");
+
+    //Verificar que el Correo este escrito correctamente con el correo de verificación
+    if($scope.campoCorreo!= $scope.campoCorreoVerificacion){
+
+        SweetAlert.swal("Verificar su correo");
+
+    }
+    //Una vez revisado esto, se procede a averiguar si no hay un registro previo usando la CURP y/o Correo como medios de verificacion
+    else{
+        $http({
+            url: "http://localhost/API.CREARE/Registro/v1/VerificarExistencia",
+            method: "POST",
+            data: {
+                reg_CURP : $scope.ClaveCURP,
+                reg_Mail : $scope.campoCorreo
+            },
+        }).then(function successCallback(response) {
+
+            //Si los datos no existen, se Agregarán a la DB
+            if(response.data!=1){
+                SweetAlert.swal({
+                    title: "Deseas Registrarte?",
+                    text: "Tus Datos quedaran registrados de esta manera",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Si, Registrar!",
+                    cancelButtonText: "No, Revisar Datos!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false },
+                function (isConfirm) {
+                    if (isConfirm) {
+        
+                        $http({
+                            url: "http://localhost/API.CREARE/Registro/v1/AddRegistro",
+                            method: "POST",
+                            data: {
+                                pai_Id: $scope.Mipais.keyID,
+                                reg_Tipo : $scope.MiOcupacion.Id_Ocupacion,
+                                reg_NombreMarca : $scope.marca,
+                                reg_RFC : $scope.campoRFC,
+                                reg_Institución : $scope.Miuniversidad.univ_ID,
+                                reg_BolsoDama : $scope.DBolso,
+                                reg_BackpackCaballero : $scope.CBackpack,
+                                reg_PrendaDama : $scope.DPrendaVestir,
+                                reg_PrendaCaballero : $scope.CPrendaVestir,
+                                reg_CalzadoDama : $scope.DCalzado,
+                                reg_CalzadoCaballero : $scope.CCalzado,
+                                reg_DiseñoMobiliario : $scope.DUMobiliario,
+                                reg_DiseñoAccesorio : $scope.DUAccesorio,
+                                ent_ID : $scope.Miestado.keyID,
+                                mun_ID : $scope.Mimunicipio.keyID,
+                                reg_Calle : $scope.campoCalle,
+                                reg_Num : $scope.campoNumero,
+                                reg_Col : $scope.campoColonia,
+                                reg_CP : $scope.campoCodigopostal,
+                                reg_Lada : $scope.campoLada,
+                                reg_Tel : $scope.campoTelefono,
+                                reg_CURP : $scope.ClaveCURP,
+                                reg_Nombre : $scope.campoNombre,
+                                reg_ApellidoPat : $scope.campoApellidoPaterno,
+                                reg_ApellidoMat : $scope.campoApellidoMaterno,
+                                reg_Sexo : ($scope.campoSexo=="H"? 1 : 0),
+                                reg_FechaNacimiento : $scope.sampleDate,
+                                reg_Mail : $scope.campoCorreo,
+                                reg_Facebook : $scope.CFacebook,
+                                reg_Twitter : $scope.CTwitter,
+                                reg_Conocido : $scope.CConocido,
+                                reg_Participante : $scope.CParticipante,
+                                reg_Escuela : $scope.CEscuela,
+                                reg_Otro : $scope.COtro,
+                                reg_OtroDescripcion : $scope.ODescripcion,
+                                reg_InfoCREARE : $scope.btnCREARE,
+                                reg_InfoMesModa : $scope.btnModa
+                            },
+                        }).then(function successCallback(response) {
+        
+                            SweetAlert.swal("Registrado!", "Tus Datos han sido Registrados.", "success");
+                            console.log(response.data);
+        
+                            }, function errorCallback(response) {
+                                $scope.error = response.statusText;
+                        });
+                    }
+                     else {
+                        SweetAlert.swal("Cancelado", " :)", "error");
+                    }
+                });
             }
+            //Si los datos ya existen, se mustra mensaje de que no puede realizarse el registro.
+            else{
+                SweetAlert.swal("Ya existe un registro previo", "Verifica tu información", "error");
+            }
+            }, function errorCallback(response) {
+                $scope.error = response.statusText;
         });
+    }
 }
+
+
+
+$scope.CurpValidacion = function()
+{
+//Undefined por la consulta que se hace para validar el curp
+if($scope.modelcurp == undefined )
+{
+        SweetAlert.swal({
+            title: "Curp No Valido",
+            text: "Por favor Revisa tu Curp"
+        });    
+}
+
+//Hacer la funcion para llenar Datos.
+
+
+}
+
+
+
+
 
 
   this.Modalidades=[
@@ -484,13 +657,15 @@ function DiseñadorExtranjero()
     $scope.desModalidades=true;
 }
     $scope.patternNombre=/^[a-zA-Z]*$/;
+    
+    
+    
     $scope.SleccionOcupacion = function() 
     {
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
-        var Seleccion2=$scope.Mipais.nombre;
+        var Seleccion2=$scope.Mipais.descripcion;
         
-
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
             alert(" Diseñador Mexicano"); 
@@ -533,6 +708,18 @@ function DiseñadorExtranjero()
         Id_Pais:1,
         nombre:"Mexico"
       }
+
+
+      $scope.ListaMunicipios= function(){
+        $http.get('http://201.144.43.184/API.Core/Municipios/v1/GetMunicipioByParentEntity/' + $scope.Miestado.keyID)
+        .success(function(Resultado){
+            $scope.Municipios=Resultado;
+        })
+        .error(function(err){
+            console.log(err);
+        })
+    }
+
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
         +" te pedimos poder contar con tu informacion real,por si llega a presentarse "

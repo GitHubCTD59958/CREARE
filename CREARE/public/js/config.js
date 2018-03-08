@@ -26,7 +26,6 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         templateUrl: "views/common/content.html",
     })
 
-   
         .state('CREARE.Forma', {
             url: "/Forma",
             templateUrl: "views/CREARE/Forma.html",
@@ -872,6 +871,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/chat_view.html",
             data: { pageTitle: 'Chat view' }
         })
+
         .state('miscellaneous.nestable_list', {
             url: "/nestable_list",
             templateUrl: "views/nestable_list.html",
@@ -887,6 +887,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
+        
         .state('miscellaneous.notify', {
             url: "/notify",
             templateUrl: "views/notify.html",
