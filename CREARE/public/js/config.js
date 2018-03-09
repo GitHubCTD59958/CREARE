@@ -41,7 +41,9 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                         {
                             files: ['css/plugins/iCheck/custom.css','js/plugins/iCheck/icheck.min.js','js/plugins/sweetalert/angular-sweetalert.min.js','js/plugins/sweetalert/sweetalert.min.js', 'css/plugins/sweetalert/sweetalert.css']
                         },
-                        ,
+                        {
+                            files: ['js/plugins/jasny/jasny-bootstrap.min.js']
+                        },
                         {
                             name: 'oitozero.ngSweetAlert',
                             files: ['js/plugins/sweetalert/angular-sweetalert.min.js']
@@ -887,7 +889,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 }
             }
         })
-        
+
         .state('miscellaneous.notify', {
             url: "/notify",
             templateUrl: "views/notify.html",

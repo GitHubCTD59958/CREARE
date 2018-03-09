@@ -349,13 +349,36 @@ function MainCtrl($http) {
     };
 };
 
-function FormaCtrl($scope, SweetAlert, $http)
+//Definicon de Controlador y lo declare en el final de esta pagina 
+ function FormaCtrl($scope, SweetAlert, $http)
  {
   var CREARE=this;
 
-  //Constructor de las variables para los checkBox, ya que ANGULAR los muestra como undefined si no se declaran y no se seleccionan en algun momento
 
     $scope.Constructor= function(){
+
+        //Campos que necesitan ser Revisados
+        $scope.erroOcupacion=false;
+        $scope.erroNombre=false;
+        $scope.errorApellidoPaterno=false;
+        $scope.errorApellidoMaterno=false;
+        $cope.errorFecha=false;
+        $scope.errorGenero=false;
+        $scope.errorCorreo=false;
+        $scope.errorConfirmarCorreo=false;
+        $scope.errorNoCoinciden=false;
+        $scope.errorNumero=false;
+        $scope.errorColonia=false;
+        $scope.errorTelefono=false;
+        $scope.errorMunicipio=false;
+        $scope.erroModalidad=false;
+        $scope.errorMedios=false;
+        $scop.errorInformacion=false;
+        $scope.errorRFC=fal;
+        $scop.errorMarca=false;
+
+
+
         $scope.Miuniversidad="";
         $scope.marca="";
         $scope.campoRFC="";
@@ -380,7 +403,7 @@ function FormaCtrl($scope, SweetAlert, $http)
   //Llenado de los ComboBox con informacion de la base de datos
 
   $scope.ListaUniversidades= function(){
-      $http.get('http://localhost/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
+    $http.get('http://201.144.43.184/API.Creare2018/Universidades/v1/GetUniversidadesCatalog')
       .success(function(Resultado){
           $scope.Universidades=Resultado;
       })
@@ -411,10 +434,18 @@ function FormaCtrl($scope, SweetAlert, $http)
             console.log(err);
         })
     }
-
-    $scope.ConsultarCURP= function(){
-        $http.get('http://201.144.43.183/API.RENAPO/Renapo/v1/GetRenapo/' + $scope.ClaveCURP)
+    //Revisar el si no es vlaido el curp 
+    $scope.ConsultarCURP= function(){        
+        if($scope.ClaveCURP==undefined)
+        {
+                $scope.ErrorCurp=true;
+        }
+        else
+        {
+            $http.get('http://201.144.43.183/API.RENAPO/Renapo/v1/GetRenapo/' + $scope.ClaveCURP)
           .success(function(Resultado){
+           
+               $scope.ErrorCurp=false;
                $scope.campoNombre=Resultado.nombres;
                $scope.campoApellidoPaterno=Resultado.primerApellido;
                $scope.campoApellidoMaterno=Resultado.segundoApellido;
@@ -422,9 +453,39 @@ function FormaCtrl($scope, SweetAlert, $http)
                $scope.sampleDate=Resultado.fechNac;
           })
           .error(function(err){
+
               console.log(err);
           });
+        }
     }
+
+$scope.ValidarCorreo = function ()
+{
+ var letra= $scope.campoCorreo;
+  
+    re=/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
+	if(!re.exec(letra)){
+		alert('email no valido');
+	}
+	else alert('email valido');   
+}
+
+$scope.Checkcorreo = function ()
+{
+    var letra= $scope.campoCorreo;
+    if(letra==$scope.campoCorreoVerificacion)
+    {
+        $scope.errorNoCoinciden=false;
+    }
+    else
+    {
+        $scope.errorNoCoinciden=true; 
+    }
+
+}
+
+
+
 
   $scope.registrarDatosforma = function () {
 
@@ -528,57 +589,22 @@ function FormaCtrl($scope, SweetAlert, $http)
 
 
 
-$scope.CurpValidacion = function()
-{
-//Undefined por la consulta que se hace para validar el curp
-if($scope.modelcurp == undefined )
-{
-        SweetAlert.swal({
-            title: "Curp No Valido",
-            text: "Por favor Revisa tu Curp"
-        });    
-}
-
-//Hacer la funcion para llenar Datos.
-
-
-}
-
-
-
-
-
-
   this.Modalidades=[
       {
         Descripcion:"Bolso"
       }];
-        $scope.Mipais=null
-      $scope.Paises =
-    [
-      {
-        Id_Pais:'1',
-        nombre:'Mexico'
-      },
-      {
-        Id_Pais:'2',
-        nombre:'Usa'
-      },
-      {
-        Id_Pais:'3',
-        nombre:'Alemania'
-      }
-    ]    
+
       $scope.Ocupacion = 
       [{
-        Id_Ocupacion: '1',
+        Id_Ocupacion: '0',
         nombre: 'Estudiante'
          },
        {
-        Id_Ocupacion: '2',
+        Id_Ocupacion: '1',
         nombre: 'Diseñador'
           }
-      ]
+      ];
+
       //Inicializar los controladores Deshabilitados
       $scope.desNombre=true;$scope.desApPaterno=true;
       $scope.desApMaterno=true;$scope.desFecha=true;
@@ -590,15 +616,16 @@ if($scope.modelcurp == undefined )
       $scope.Conocido=true;$scope.Participante=true;
       $scope.Escuela=true;$scope.otro=true;
       $scope.desModalidades=false;
+      $scope.Escuela=false;
 
 function Activar()
 {
     $scope.Curp=true;
     $scope.Marca=true;
     $scope.shwEscuela=false;
-   $scope.desBoton=false;
-   $scope.Escuela=false;
-   $scope.desModalidades=true;  
+    $scope.desBoton=false;
+    $scope.Escuela=false;
+    $scope.desModalidades=true;  
 }
 function DatoRecidencial()
 {
@@ -657,15 +684,12 @@ function DiseñadorExtranjero()
     $scope.desModalidades=true;
 }
     $scope.patternNombre=/^[a-zA-Z]*$/;
-    
-    
-    
+
     $scope.SleccionOcupacion = function() 
     {
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.descripcion;
-        
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
             alert(" Diseñador Mexicano"); 
@@ -684,41 +708,39 @@ function DiseñadorExtranjero()
        if(Seleccion2!="Mexico")
         {
             if(Seleccion=="Estudiante")
-            {
-                alert(" Estudiante Extranjero"); 
+            { 
                 // $scope.Escuela=false;
                 //$scope.Curp=false;
                 EstudianteExtranjero();
+                alert(" Estudiante Extranjero"); 
             }
             else
             {
-                alert(" Diseñador Extranjero");
              // $scope.Escuela=false;
               //$scope.Curp=false;
+              alert(" Diseñador Extranjero"); 
               DiseñadorExtranjero();
             }
         }
-    } 
+    }
+    
     $scope.SeleccionPais= function()
     {
-        var Seleccion=$scope.Mipais.nombre;
-        alert(Seleccion);        
+        // var Seleccion=$scope.Mipais.keyID;
+        // alert(Seleccion);      
     }
-    $scope.Mipais={
-        Id_Pais:1,
-        nombre:"Mexico"
-      }
-
 
       $scope.ListaMunicipios= function(){
-        $http.get('http://201.144.43.184/API.Core/Municipios/v1/GetMunicipioByParentEntity/' + $scope.Miestado.keyID)
-        .success(function(Resultado){
-            $scope.Municipios=Resultado;
-        })
-        .error(function(err){
-            console.log(err);
-        })
-    }
+          $http.get('http://201.144.43.184/API.Core/Municipios/v1/GetMunicipioByParentEntity/' + $scope.Miestado.keyID)
+          .success(function(Resultado){
+              $scope.Municipios=Resultado;
+          })
+          .error(function(err){
+              console.log(err);
+          })
+      }
+
+      
 
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
