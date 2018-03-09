@@ -679,13 +679,15 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
         .state('logins', {
             url: "/logins",
             templateUrl: "views/login.html",
-            data: { pageTitle: 'Login', specialClass: 'gray-bg' }
+          
         })
         .state('login_two_columns', {
             url: "/login_two_columns",
+            data: { pageTitle: 'Login' },
             templateUrl: "views/login_two_columns.html",
-            data: { pageTitle: 'Login two columns', specialClass: 'gray-bg' }
+            data: { pageTitle: 'Creáre Login ', specialClass: 'gray-bg' }
         })
+        
         .state('register', {
             url: "/register",
             templateUrl: "views/register.html",

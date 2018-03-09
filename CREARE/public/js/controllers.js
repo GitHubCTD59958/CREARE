@@ -362,7 +362,7 @@ function MainCtrl($http) {
         $scope.erroNombre=false;
         $scope.errorApellidoPaterno=false;
         $scope.errorApellidoMaterno=false;
-        $cope.errorFecha=false;
+        $scope.errorFecha=false;
         $scope.errorGenero=false;
         $scope.errorCorreo=false;
         $scope.errorConfirmarCorreo=false;
@@ -373,11 +373,9 @@ function MainCtrl($http) {
         $scope.errorMunicipio=false;
         $scope.erroModalidad=false;
         $scope.errorMedios=false;
-        $scop.errorInformacion=false;
-        $scope.errorRFC=fal;
-        $scop.errorMarca=false;
-
-
+        $scope.errorInformacion=false;
+        $scope.errorRFC=false;
+        $scope.errorMarca=false;
 
         $scope.Miuniversidad="";
         $scope.marca="";
@@ -400,10 +398,119 @@ function MainCtrl($http) {
         $scope.ODescripcion="";
     }
 
+    $scope.MostrarModa=function(){
+        var Contadora=0;
+
+        var Validar=[$scope.DPrendaVestir, $scope.DCalzado, $scope.DBolso, $scope.CPrendaVestir, $scope.CCalzado, $scope.CBackpack];
+
+        for(i=0; i<Validar.length; i++){
+            if(Validar[i]==true){
+                Contadora++;
+            }
+            if(Contadora==5){
+                SweetAlert.swal("Máximo número de modalidades alcanzado", "Solo puede inscribirse hasta en 5 categorías","warning");
+                if(Validar[0]==false){
+                    $scope.DPrendaVestirVisible=true;
+                }
+                if(Validar[1]==false){
+                    $scope.DCalzadoVisible=true;
+                }
+                if(Validar[2]==false){
+                    $scope.DBolsoVisible=true;
+                }
+                if(Validar[3]==false){
+                    $scope.CPrendaVestirVisible=true;
+                }
+                if(Validar[4]==false){
+                    $scope.CCalzadoVisible=true;
+                }
+                if(Validar[5]==false){
+                    $scope.CBackpackVisible=true;
+                }
+            }
+            else{
+                $scope.DPrendaVestirVisible=false;;
+                $scope.DCalzadoVisible=false;
+                $scope.DBolsoVisible=false;
+                $scope.CPrendaVestirVisible=false;
+                $scope.CCalzadoVisible=false;
+                $scope.CBackpackVisible=false;
+            }
+        }
+    }
+
+    $scope.MostrarDi= function(){
+        
+        if ($scope.DUAccesorio==true) {
+
+            $scope.MobVisible=true;
+            //$scope.AccVisible=false;
+        }else{
+            if ($scope.DUMobiliario==true) {
+
+                $scope.AccVisible=true;
+                //$scope.MobVisible=false;
+            }
+            else{
+                $scope.MobVisible=false;
+                $scope.AccVisible=false;
+            }
+        }
+    };
+
+    $scope.MostrarIC= function(){
+        
+        if ($scope.IcSI==true) {
+
+            $scope.ICNOVisible=true;
+            $scope.errorInformacion=false;
+        }else{
+            if ($scope.IcNO==true) {
+
+                $scope.ICVisible=true;
+                $scope.errorInformacion=false;
+            }
+            else{
+                $scope.errorInformacion=true;
+                $scope.ICNOVisible=false;
+                $scope.ICVisible=false;
+            }
+        }
+    };
+
+    $scope.MostrarIMM= function(){
+        
+        if ($scope.ImmSi==true) {
+
+            $scope.IMMNOVisible=true;
+            $scope.errorInformacion=false;
+        }else{
+            if ($scope.ImmNo==true) {
+
+                $scope.IMMVisible=true;
+                $scope.errorInformacion=false;
+            }
+            else{
+                $scope.errorInformacion=true;
+                $scope.IMMNOVisible=false;
+                $scope.IMMVisible=false;
+            }
+        }
+    };
+
+    $scope.MostrarOtro= function(){
+        
+        if($scope.VistaOtro==true){
+            $scope.VistaOtro=false;
+        }else{
+            $scope.VistaOtro=true;
+        }
+    }
+
   //Llenado de los ComboBox con informacion de la base de datos
 
   $scope.ListaUniversidades= function(){
-    $http.get('http://201.144.43.184/API.Creare2018/Universidades/v1/GetUniversidadesCatalog')
+    $http.get('http://localhost/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
       .success(function(Resultado){
           $scope.Universidades=Resultado;
       })
@@ -444,7 +551,6 @@ function MainCtrl($http) {
         {
             $http.get('http://201.144.43.183/API.RENAPO/Renapo/v1/GetRenapo/' + $scope.ClaveCURP)
           .success(function(Resultado){
-           
                $scope.ErrorCurp=false;
                $scope.campoNombre=Resultado.nombres;
                $scope.campoApellidoPaterno=Resultado.primerApellido;
@@ -453,7 +559,7 @@ function MainCtrl($http) {
                $scope.sampleDate=Resultado.fechNac;
           })
           .error(function(err){
-
+            $scope.ErrorCurp=true;
               console.log(err);
           });
         }
@@ -465,9 +571,7 @@ $scope.ValidarCorreo = function ()
   
     re=/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
 	if(!re.exec(letra)){
-		alert('email no valido');
 	}
-	else alert('email valido');   
 }
 
 $scope.Checkcorreo = function ()
@@ -484,10 +588,7 @@ $scope.Checkcorreo = function ()
 
 }
 
-
-
-
-  $scope.registrarDatosforma = function () {
+$scope.registrarDatosforma = function () {
 
     //Verificar que el Correo este escrito correctamente con el correo de verificación
     if($scope.campoCorreo!= $scope.campoCorreoVerificacion){
@@ -508,19 +609,21 @@ $scope.Checkcorreo = function ()
 
             //Si los datos no existen, se Agregarán a la DB
             if(response.data!=1){
+
                 SweetAlert.swal({
                     title: "Deseas Registrarte?",
                     text: "Tus Datos quedaran registrados de esta manera",
-                    type: "warning",
+                    type: "info",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
                     confirmButtonText: "Si, Registrar!",
                     cancelButtonText: "No, Revisar Datos!",
                     closeOnConfirm: false,
-                    closeOnCancel: false },
+                    closeOnCancel: false,
+                    showLoaderOnConfirm: true },
                 function (isConfirm) {
                     if (isConfirm) {
-        
+
                         $http({
                             url: "http://localhost/API.CREARE/Registro/v1/AddRegistro",
                             method: "POST",
@@ -564,11 +667,18 @@ $scope.Checkcorreo = function ()
                                 reg_InfoMesModa : $scope.btnModa
                             },
                         }).then(function successCallback(response) {
-        
-                            SweetAlert.swal("Registrado!", "Tus Datos han sido Registrados.", "success");
+                        
+                                $http.get('http://localhost/API.CREARE/Registro/v1/EnviarCorreo/' + response.data)
+                                  .success(function(Resultado){
+                                    SweetAlert.swal("Registrado!", "Tus datos han sido guardados, en un momento recibirás un correo de confirmación", "success");
+                                  })
+                                  .error(function(err){
+                                    SweetAlert.swal("Error", "Por el momento el sistema no esta disponible, intente más tarde", "error");
+                                  });
+
                             console.log(response.data);
         
-                            }, function errorCallback(response) {
+                            },function errorCallback(response) {
                                 $scope.error = response.statusText;
                         });
                     }
@@ -586,8 +696,6 @@ $scope.Checkcorreo = function ()
         });
     }
 }
-
-
 
   this.Modalidades=[
       {
@@ -679,7 +787,7 @@ function DiseñadorExtranjero()
     $scope.desSi=false;$scope.desNo=false;$scope.desSi2=false;
     $scope.desNo2=false;$scope.facebook=false;$scope.Twitter=false;
     $scope.Conocido=false;$scope.Participante=false;
-    $scope.Escuela=true
+    $scope.shwEscuela=false;$scope.Es=false;
     ;$scope.otro=false;
     $scope.desModalidades=true;
 }
@@ -692,12 +800,12 @@ function DiseñadorExtranjero()
         var Seleccion2=$scope.Mipais.descripcion;
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
-            alert(" Diseñador Mexicano"); 
+            //alert(" Diseñador Mexicano"); 
             Activar(); RedesSociales(); DatoRecidencial();
         }       
        if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
         {
-            alert(" Estudiante Mexicano"); 
+            //alert(" Estudiante Mexicano"); 
             $scope.desModalidades=true;
             $scope.Curp=true;
             $scope.shwEscuela=true;
@@ -709,16 +817,12 @@ function DiseñadorExtranjero()
         {
             if(Seleccion=="Estudiante")
             { 
-                // $scope.Escuela=false;
-                //$scope.Curp=false;
                 EstudianteExtranjero();
-                alert(" Estudiante Extranjero"); 
+                //alert(" Estudiante Extranjero"); 
             }
             else
             {
-             // $scope.Escuela=false;
-              //$scope.Curp=false;
-              alert(" Diseñador Extranjero"); 
+              //alert(" Diseñador Extranjero"); 
               DiseñadorExtranjero();
             }
         }
@@ -726,8 +830,39 @@ function DiseñadorExtranjero()
     
     $scope.SeleccionPais= function()
     {
-        // var Seleccion=$scope.Mipais.keyID;
-        // alert(Seleccion);      
+        $scope.expresion=true;
+        var Seleccion=$scope.MiOcupacion.nombre;
+        var Seleccion2=$scope.Mipais.descripcion;
+
+        if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
+        {
+            //alert(" Diseñador Mexicano"); 
+            Activar(); RedesSociales(); DatoRecidencial();
+        }       
+       if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
+        {
+            //alert(" Estudiante Mexicano"); 
+            $scope.desModalidades=true;
+            $scope.Curp=true;
+            $scope.shwEscuela=true;
+            $scope.Marca=false;    
+            RedesSociales(); DatoRecidencial();
+        }
+
+       if(Seleccion2!="Mexico")
+        {
+            if(Seleccion=="Estudiante")
+            { 
+                $scope.shwEscuela=false;
+                EstudianteExtranjero();
+                //alert(" Estudiante Extranjero"); 
+            }
+            else
+            {
+              //alert(" Diseñador Extranjero"); 
+              DiseñadorExtranjero();
+            }
+        }
     }
 
       $scope.ListaMunicipios= function(){
@@ -739,8 +874,6 @@ function DiseñadorExtranjero()
               console.log(err);
           })
       }
-
-      
 
       //Leyenda Pagina Principal
         $scope.Leyenda="Este resgitro es interno,para mayor control del comité,asi como"
