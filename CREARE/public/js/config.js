@@ -10,22 +10,17 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
     // Configure Idle settings
     IdleProvider.idle(5); // in seconds
     IdleProvider.timeout(120); // in seconds
-
     $urlRouterProvider.otherwise("/CREARE/Forma");
-
     $ocLazyLoadProvider.config({
         // Set to true if you want to see what and when is dynamically loaded
         debug: false
     });
-
     $stateProvider
-        
     .state('CREARE', {
         abstract: true,
         url: "/CREARE",
         templateUrl: "views/common/content.html",
     })
-
         .state('CREARE.Forma', {
             url: "/Forma",
             templateUrl: "views/CREARE/Forma.html",
@@ -51,13 +46,24 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                     ]);
                 }
             }
-        })
-                
+        })  
+
+        
+
+
+
+
+
+
+
+
+
         .state('dashboards_top', {
             abstract: true,
             url: "/dashboards_top",
             templateUrl: "views/common/content_top_navigation.html",
         })
+
         .state('dashboards_top.dashboard_4', {
             url: "/dashboard_4",
             templateUrl: "views/dashboard_4.html",
@@ -66,22 +72,25 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
                 loadPlugin: function ($ocLazyLoad) {
                     return $ocLazyLoad.load([
                         {
-                            name: 'angles',
-                            files: ['js/plugins/chartJs/angles.js', 'js/plugins/chartJs/Chart.min.js']
-                        },
-                        {
-                            name: 'angular-peity',
-                            files: ['js/plugins/peity/jquery.peity.min.js', 'js/plugins/peity/angular-peity.js']
+                            serie: true,
+                            files: ['js/plugins/dataTables/datatables.min.js','css/plugins/dataTables/datatables.min.css']
                         },
                         {
                             serie: true,
-                            name: 'angular-flot',
-                            files: [ 'js/plugins/flot/jquery.flot.js', 'js/plugins/flot/jquery.flot.time.js', 'js/plugins/flot/jquery.flot.tooltip.min.js', 'js/plugins/flot/jquery.flot.spline.js', 'js/plugins/flot/jquery.flot.resize.js', 'js/plugins/flot/jquery.flot.pie.js', 'js/plugins/flot/curvedLines.js', 'js/plugins/flot/angular-flot.js', ]
+                            name: 'datatables',
+                            files: ['js/plugins/dataTables/angular-datatables.min.js']
+                        },
+                        {
+                            serie: true,
+                            name: 'datatables.buttons',
+                            files: ['js/plugins/dataTables/angular-datatables.buttons.min.js']
                         }
                     ]);
                 }
             }
         })
+        
+
         
         .state('dashboards.dashboard_4_1', {
             url: "/dashboard_4_1",
@@ -661,6 +670,7 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/vote_list.html",
             data: { pageTitle: 'Vote list' }
         })
+
         .state('pages', {
             abstract: true,
             url: "/pages",
@@ -671,11 +681,13 @@ function config($stateProvider, $urlRouterProvider, $ocLazyLoadProvider, IdlePro
             templateUrl: "views/search_results.html",
             data: { pageTitle: 'Search results' }
         })
+
         .state('pages.empy_page', {
             url: "/empy_page",
             templateUrl: "views/empty_page.html",
             data: { pageTitle: 'Empty page' }
         })
+        
         .state('logins', {
             url: "/logins",
             templateUrl: "views/login.html",

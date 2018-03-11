@@ -300,7 +300,7 @@ function MainCtrl($http) {
             width: 64
         }
     };
-
+    
     this.LineChart4 = {
         data: [5, 3, 9, 6, 5, 9, 7, 3, 5, 2],
         options: {
@@ -376,6 +376,7 @@ function MainCtrl($http) {
         $scope.errorInformacion=false;
         $scope.errorRFC=false;
         $scope.errorMarca=false;
+        $scope.errorEnterado=false;
 
         $scope.Miuniversidad="";
         $scope.marca="";
@@ -396,6 +397,20 @@ function MainCtrl($http) {
         $scope.CEscuela=false;
         $scope.COtro=false;
         $scope.ODescripcion="";
+        $scope.NombreEscuela="";
+    }
+
+    $scope.Pruebas=function(){
+    };
+
+
+    $scope.VerficicarContestados=function(){
+        if($scope.CFacebook==false && $scope.CTwitter==false && $scope.CConocido==false &&             $scope.CParticipante==false && $scope.CEscuela==false && $scope.COtro==false){
+            $scope.errorEnterado=true;
+            SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
+        }else{
+            $scope.errorEnterado=false;
+        }
     }
 
     $scope.MostrarModa=function(){
@@ -408,7 +423,7 @@ function MainCtrl($http) {
                 Contadora++;
             }
             if(Contadora==5){
-                SweetAlert.swal("Máximo número de modalidades alcanzado", "Solo puede inscribirse hasta en 5 categorías","warning");
+                SweetAlert.swal("Máximo número de modalidades alcanzado", "Solo puede inscribirse hasta en 5 categorías de dama y caballero","warning");
                 if(Validar[0]==false){
                     $scope.DPrendaVestirVisible=true;
                 }
@@ -441,6 +456,10 @@ function MainCtrl($http) {
 
     $scope.MostrarDi= function(){
         
+        if($scope.DUAccesorio==false && $scope.DUMobiliario==false){
+            SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
+        }
+
         if ($scope.DUAccesorio==true) {
 
             $scope.MobVisible=true;
@@ -457,11 +476,8 @@ function MainCtrl($http) {
             }
         }
     };
-
     $scope.MostrarIC= function(){
-        
         if ($scope.IcSI==true) {
-
             $scope.ICNOVisible=true;
             $scope.errorInformacion=false;
         }else{
@@ -471,13 +487,13 @@ function MainCtrl($http) {
                 $scope.errorInformacion=false;
             }
             else{
+                SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
                 $scope.errorInformacion=true;
                 $scope.ICNOVisible=false;
                 $scope.ICVisible=false;
             }
         }
     };
-
     $scope.MostrarIMM= function(){
         
         if ($scope.ImmSi==true) {
@@ -486,39 +502,39 @@ function MainCtrl($http) {
             $scope.errorInformacion=false;
         }else{
             if ($scope.ImmNo==true) {
-
                 $scope.IMMVisible=true;
                 $scope.errorInformacion=false;
             }
             else{
+                SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
                 $scope.errorInformacion=true;
                 $scope.IMMNOVisible=false;
                 $scope.IMMVisible=false;
             }
         }
     };
-
     $scope.MostrarOtro= function(){
-        
+        if($scope.CFacebook==false && $scope.CTwitter==false && $scope.CConocido==false &&             $scope.CParticipante==false && $scope.CEscuela==false && $scope.COtro==false){
+            $scope.errorEnterado=true;
+            SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
+        }
+
         if($scope.VistaOtro==true){
             $scope.VistaOtro=false;
         }else{
             $scope.VistaOtro=true;
         }
     }
-
   //Llenado de los ComboBox con informacion de la base de datos
-
   $scope.ListaUniversidades= function(){
-    $http.get('http://localhost/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
+    $http.get('http://201.144.43.184/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
       .success(function(Resultado){
           $scope.Universidades=Resultado;
       })
       .error(function(err){
           console.log(err);
       })
-  }
-        
+  }  
     $scope.ListaPaises= function(){
         $scope.Mipais={};
         $http.get('http://201.144.43.184/API.Core/Paises/v1/GetPaisCatalog')
@@ -531,11 +547,11 @@ function MainCtrl($http) {
             console.log(err);
         })
     }
-
     $scope.ListaEstados= function(){
         $http.get('http://201.144.43.184/API.Core/Entidades/v1/GetEntidadCatalog')
         .success(function(Resultado){
             $scope.Estados=Resultado;
+            // $scope.Miestado.keyID="13";
         })
         .error(function(err){
             console.log(err);
@@ -543,7 +559,7 @@ function MainCtrl($http) {
     }
     //Revisar el si no es vlaido el curp 
     $scope.ConsultarCURP= function(){        
-        if($scope.ClaveCURP==undefined)
+        if($scope.ClaveCURP=="")
         {
                 $scope.ErrorCurp=true;
         }
@@ -551,29 +567,38 @@ function MainCtrl($http) {
         {
             $http.get('http://201.144.43.183/API.RENAPO/Renapo/v1/GetRenapo/' + $scope.ClaveCURP)
           .success(function(Resultado){
-               $scope.ErrorCurp=false;
-               $scope.campoNombre=Resultado.nombres;
-               $scope.campoApellidoPaterno=Resultado.primerApellido;
-               $scope.campoApellidoMaterno=Resultado.segundoApellido;
-               $scope.campoSexo=Resultado.sexo;
-               $scope.sampleDate=Resultado.fechNac;
+            if (Resultado.statusOper=='EXITOSO'){
+                $scope.ErrorCurp=false;
+                $scope.campoNombre=Resultado.nombres;
+                $scope.campoApellidoPaterno=Resultado.primerApellido;
+                $scope.campoApellidoMaterno=Resultado.segundoApellido;
+                $scope.campoSexo=Resultado.sexo;
+                $scope.sampleDate=Resultado.fechNac;
+            }
+            else{
+                $scope.ErrorCurp=true;
+                SweetAlert.swal("No se localizaron datos para la CURP dada", "Verifica tu información", "error");
+            }
+             
           })
           .error(function(err){
+            SweetAlert.swal("Espere un momento", "Sistema no disponible, intente nuevamente", "error");
             $scope.ErrorCurp=true;
-              console.log(err);
           });
         }
     }
-
-$scope.ValidarCorreo = function ()
-{
+$scope.ValidarCorreo = function (){
  var letra= $scope.campoCorreo;
-  
     re=/^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/
 	if(!re.exec(letra)){
+        $scope.errorCorreo=true;
+		console.log('email no valido');
 	}
+	else{
+        $scope.errorCorreo=false;
+        console.log('email valido');
+    }   
 }
-
 $scope.Checkcorreo = function ()
 {
     var letra= $scope.campoCorreo;
@@ -585,28 +610,26 @@ $scope.Checkcorreo = function ()
     {
         $scope.errorNoCoinciden=true; 
     }
-
 }
-
 $scope.registrarDatosforma = function () {
-
+    
     //Verificar que el Correo este escrito correctamente con el correo de verificación
     if($scope.campoCorreo!= $scope.campoCorreoVerificacion){
 
-        SweetAlert.swal("Verificar su correo");
+        $scope.errorCorreo=true;
+        SweetAlert.swal("Error", "Verificar que su correo sea válido", "warning");
 
     }
     //Una vez revisado esto, se procede a averiguar si no hay un registro previo usando la CURP y/o Correo como medios de verificacion
     else{
         $http({
-            url: "http://localhost/API.CREARE/Registro/v1/VerificarExistencia",
+            url: "http://201.144.43.184/API.CREARE/Registro/v1/VerificarExistencia",
             method: "POST",
             data: {
                 reg_CURP : $scope.ClaveCURP,
                 reg_Mail : $scope.campoCorreo
             },
         }).then(function successCallback(response) {
-
             //Si los datos no existen, se Agregarán a la DB
             if(response.data!=1){
 
@@ -625,7 +648,7 @@ $scope.registrarDatosforma = function () {
                     if (isConfirm) {
 
                         $http({
-                            url: "http://localhost/API.CREARE/Registro/v1/AddRegistro",
+                            url: "http://201.144.43.184/API.CREARE/Registro/v1/AddRegistro",
                             method: "POST",
                             data: {
                                 pai_Id: $scope.Mipais.keyID,
@@ -633,6 +656,7 @@ $scope.registrarDatosforma = function () {
                                 reg_NombreMarca : $scope.marca,
                                 reg_RFC : $scope.campoRFC,
                                 reg_Institución : $scope.Miuniversidad.univ_ID,
+                                reg_UnivEscrita: $scope.NombreEscuela,
                                 reg_BolsoDama : $scope.DBolso,
                                 reg_BackpackCaballero : $scope.CBackpack,
                                 reg_PrendaDama : $scope.DPrendaVestir,
@@ -641,8 +665,8 @@ $scope.registrarDatosforma = function () {
                                 reg_CalzadoCaballero : $scope.CCalzado,
                                 reg_DiseñoMobiliario : $scope.DUMobiliario,
                                 reg_DiseñoAccesorio : $scope.DUAccesorio,
-                                ent_ID : $scope.Miestado.keyID,
-                                mun_ID : $scope.Mimunicipio.keyID,
+                                ent_ID : ($scope.Miestado == undefined ? 0 : $scope.Miestado.keyID),
+                                mun_ID :  ($scope.Mimunicipio== undefined ? 0 : $scope.Mimunicipio.keyID),
                                 reg_Calle : $scope.campoCalle,
                                 reg_Num : $scope.campoNumero,
                                 reg_Col : $scope.campoColonia,
@@ -667,12 +691,13 @@ $scope.registrarDatosforma = function () {
                                 reg_InfoMesModa : $scope.btnModa
                             },
                         }).then(function successCallback(response) {
-                        
-                                $http.get('http://localhost/API.CREARE/Registro/v1/EnviarCorreo/' + response.data)
+
+                                $http.get('http://201.144.43.184/API.CREARE/Registro/v1/EnviarCorreo/' + response.data)
                                   .success(function(Resultado){
                                     SweetAlert.swal("Registrado!", "Tus datos han sido guardados, en un momento recibirás un correo de confirmación", "success");
                                   })
                                   .error(function(err){
+                                      console.log(err);
                                     SweetAlert.swal("Error", "Por el momento el sistema no esta disponible, intente más tarde", "error");
                                   });
 
@@ -695,6 +720,8 @@ $scope.registrarDatosforma = function () {
                 $scope.error = response.statusText;
         });
     }
+
+    
 }
 
   this.Modalidades=[
@@ -725,9 +752,21 @@ $scope.registrarDatosforma = function () {
       $scope.Escuela=true;$scope.otro=true;
       $scope.desModalidades=false;
       $scope.Escuela=false;
+      $scope.VistaEstado=false;
+      $scope.VistaMunicipio=false;
+
+function LimpiarDatos(){
+        $scope.campoNombre="";
+        $scope.campoApellidoPaterno="";
+        $scope.campoApellidoMaterno="";
+        $scope.campoSexo="";
+        $scope.sampleDate="";
+        $scope.NombreEscuela="";
+};
 
 function Activar()
 {
+    $scope.Es=false;
     $scope.Curp=true;
     $scope.Marca=true;
     $scope.shwEscuela=false;
@@ -773,6 +812,8 @@ function EstudianteExtranjero()
     $scope.Escuela=false;$scope.otro=false;
     $scope.desModalidades=true;
     $scope.desFecha=false;
+    $scope.VistaEstado=false;
+    $scope.VistaMunicipio=false;
 }
 
 function DiseñadorExtranjero()
@@ -788,8 +829,10 @@ function DiseñadorExtranjero()
     $scope.desNo2=false;$scope.facebook=false;$scope.Twitter=false;
     $scope.Conocido=false;$scope.Participante=false;
     $scope.shwEscuela=false;$scope.Es=false;
-    ;$scope.otro=false;
+    $scope.otro=false;
     $scope.desModalidades=true;
+    $scope.VistaEstado=false;
+    $scope.VistaMunicipio=false;
 }
     $scope.patternNombre=/^[a-zA-Z]*$/;
 
@@ -798,18 +841,24 @@ function DiseñadorExtranjero()
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.descripcion;
+
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
             //alert(" Diseñador Mexicano"); 
             Activar(); RedesSociales(); DatoRecidencial();
+            $scope.VistaEstado=true;
+            $scope.VistaMunicipio=true;
         }       
        if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
         {
             //alert(" Estudiante Mexicano"); 
             $scope.desModalidades=true;
             $scope.Curp=true;
+            $scope.Es=false;
             $scope.shwEscuela=true;
-            $scope.Marca=false;    
+            $scope.Marca=false;
+            $scope.VistaEstado=true;
+            $scope.VistaMunicipio=true; 
             RedesSociales(); DatoRecidencial();
         }
 
@@ -817,13 +866,13 @@ function DiseñadorExtranjero()
         {
             if(Seleccion=="Estudiante")
             { 
-                EstudianteExtranjero();
+                EstudianteExtranjero(); LimpiarDatos();
                 //alert(" Estudiante Extranjero"); 
             }
             else
             {
               //alert(" Diseñador Extranjero"); 
-              DiseñadorExtranjero();
+              DiseñadorExtranjero(); LimpiarDatos();
             }
         }
     }
@@ -836,17 +885,33 @@ function DiseñadorExtranjero()
 
         if(Seleccion=="Diseñador" && Seleccion2=="Mexico")
         {
+            $scope.Es=false;
+            $scope.desNombre=true;
+            $scope.desApPaterno=true;
+            $scope.desApMaterno=true;
+            $scope.desFecha=true;
+            $scope.desGenero=true;
+            $scope.VistaEstado=true;
+            $scope.VistaMunicipio=true;
             //alert(" Diseñador Mexicano"); 
-            Activar(); RedesSociales(); DatoRecidencial();
+            Activar(); RedesSociales(); DatoRecidencial();  LimpiarDatos();
         }       
        if(Seleccion=="Estudiante" && Seleccion2=="Mexico")
         {
             //alert(" Estudiante Mexicano"); 
             $scope.desModalidades=true;
             $scope.Curp=true;
+            $scope.Es=false;
             $scope.shwEscuela=true;
-            $scope.Marca=false;    
-            RedesSociales(); DatoRecidencial();
+            $scope.Marca=false;   
+            $scope.desNombre=true;
+            $scope.desApPaterno=true;
+            $scope.desApMaterno=true;
+            $scope.desFecha=true;
+            $scope.desGenero=true;  
+            $scope.VistaEstado=true;
+            $scope.VistaMunicipio=true;
+            RedesSociales(); DatoRecidencial();  LimpiarDatos();
         }
 
        if(Seleccion2!="Mexico")
@@ -854,13 +919,13 @@ function DiseñadorExtranjero()
             if(Seleccion=="Estudiante")
             { 
                 $scope.shwEscuela=false;
-                EstudianteExtranjero();
+                EstudianteExtranjero(); LimpiarDatos();
                 //alert(" Estudiante Extranjero"); 
             }
             else
             {
-              //alert(" Diseñador Extranjero"); 
-              DiseñadorExtranjero();
+              //alert(" Diseñador Extranjero");
+              DiseñadorExtranjero(); LimpiarDatos();
             }
         }
     }
@@ -869,6 +934,7 @@ function DiseñadorExtranjero()
           $http.get('http://201.144.43.184/API.Core/Municipios/v1/GetMunicipioByParentEntity/' + $scope.Miestado.keyID)
           .success(function(Resultado){
               $scope.Municipios=Resultado;
+             // $scope.Mimunicipio.keyID="13048";
           })
           .error(function(err){
               console.log(err);
