@@ -723,6 +723,7 @@ $scope.erroNombre=false;
 
  function limpiezaValidacion()
  {
+    $scope.errorEstado=false;
     $scope.errorNEscuela=false;
     $scope.erroComboEsc=false;
     $scope.erroOcupacion=false;
@@ -835,7 +836,6 @@ if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
            $scope.erroComboEsc=true;
            Alertnoty("Seleccione Univesidad");      
         }
-   
    }
    function RevisarCurp()
    {
@@ -844,7 +844,6 @@ if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
            Alertnoty("Falta Curp");      
            $scope.ErrorCurp=true;
        }
-
    }
    function Contacto()
    {
@@ -872,13 +871,11 @@ if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
            $scope.errorNumero=true;
            al=1;
        }
-
        if($scope.campoColonia==undefined || $scope.campoColonia=="")
        { 
            $scope.errorColonia=true;
            al=1;
        }
-       
        if($scope.Miestado==undefined || $scope.Miestado=="")
        { 
            $scope.errorEstado=true;
