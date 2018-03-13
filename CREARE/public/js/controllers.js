@@ -395,6 +395,8 @@ function notifyCtrl($scope, notify) {
         $scope.errorFecha=false;
         $scope.errorGenero=false;
         $scope.errorCorreo=false;
+        $scope.erroCalle=false;
+
         $scope.errorConfirmarCorreo=false;
         $scope.errorNoCoinciden=false;
         $scope.errorNumero=false;
@@ -718,6 +720,32 @@ $scope.erroNombre=false;
  {
      $scope.errorFecha=false;
  }
+
+ function limpiezaValidacion()
+ {
+    $scope.errorNEscuela=false;
+    $scope.erroComboEsc=false;
+    $scope.erroOcupacion=false;
+    $scope.erroNombre=false;
+    $scope.erroCalle=false;
+    $scope.errorApellidoPaterno=false;
+    $scope.errorApellidoMaterno=false;
+    $scope.errorFecha=false;
+    $scope.errorGenero=false;
+    $scope.errorCorreo=false;
+    $scope.errorConfirmarCorreo=false;
+    $scope.errorNoCoinciden=false;
+    $scope.errorNumero=false;
+    $scope.errorColonia=false;
+    $scope.errorTelefono=false;
+    $scope.errorMunicipio=false;
+    $scope.erroModalidad=false;
+    $scope.errorMedios=false;
+    $scope.errorInformacion=false;
+    $scope.errorRFC=false;
+    $scope.errorMarca=false;
+    $scope.errorEnterado=false;
+ }
 function ValidarCampos() {
     
         if($scope.MiOcupacion==undefined)
@@ -962,7 +990,7 @@ $scope.registrarDatosforma = function () {
     if($scope.campoCorreo!= $scope.campoCorreoVerificacion){
 
         $scope.errorCorreo=true;
-        SweetAlert.swal("Error", "Verificar que su correo sea válido", "warning");
+        Alertnoty("Verificar Que Correos Sean Validos");   
     }
     //Una vez revisado esto, se procede a averiguar si no hay un registro previo usando la CURP y/o Correo como medios de verificacion
     else{
@@ -1234,6 +1262,7 @@ function DiseñadorExtranjero()
     
     $scope.SeleccionPais= function()
     {
+        limpiezaValidacion();
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.descripcion;
@@ -1271,6 +1300,7 @@ function DiseñadorExtranjero()
 
        if(Seleccion2!="Mexico")
         {
+            limpiezaValidacion();
             if(Seleccion=="Estudiante")
             { 
                 $scope.shwEscuela=false;
