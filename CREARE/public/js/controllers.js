@@ -300,7 +300,7 @@ function MainCtrl($http) {
             width: 64
         }
     };
-    
+
     this.LineChart4 = {
         data: [5, 3, 9, 6, 5, 9, 7, 3, 5, 2],
         options: {
@@ -348,16 +348,46 @@ function MainCtrl($http) {
         }
     };
 };
+function notifyCtrl($scope, notify) {
+    $scope.msg = 'Hello! This is a sample message!';
+    $scope.demo = function () {
+        notify({
+            message: $scope.msg,
+            classes: $scope.classes,
+            templateUrl: $scope.template
+        });
+    };
+    $scope.closeAll = function () {
+        notify.closeAll();
+    };
+
+    $scope.inspiniaTemplate = 'views/common/notify.html';
+    $scope.inspiniaDemo1 = function(){
+        notify({ message: 'Info - This is a Inspinia info notification', classes: 'alert-info', templateUrl: $scope.inspiniaTemplate});
+    }
+    $scope.inspiniaDemo2 = function(){
+        notify({ message: 'Success - This is a Inspinia success notification', classes: 'alert-success', templateUrl: $scope.inspiniaTemplate});
+    }
+    $scope.inspiniaDemo3 = function(){
+        notify({ message: 'Warning - This is a Inspinia warning notification', classes: 'alert-warning', templateUrl: $scope.inspiniaTemplate});
+    }
+    $scope.inspiniaDemo4 = function(){
+        notify({ message: 'Danger - This is a Inspinia danger notification', classes: 'alert-danger', templateUrl: $scope.inspiniaTemplate});
+    }
+}
 
 //Definicon de Controlador y lo declare en el final de esta pagina 
- function FormaCtrl($scope, SweetAlert, $http)
+ function FormaCtrl($scope, SweetAlert, $http, $window, $location,notify)
  {
+
   var CREARE=this;
 
 
     $scope.Constructor= function(){
 
         //Campos que necesitan ser Revisados
+        $scope.errorNEscuela=false;
+        $scope.erroComboEsc=false;
         $scope.erroOcupacion=false;
         $scope.erroNombre=false;
         $scope.errorApellidoPaterno=false;
@@ -400,10 +430,6 @@ function MainCtrl($http) {
         $scope.NombreEscuela="";
     }
 
-    $scope.Pruebas=function(){
-    };
-
-
     $scope.VerficicarContestados=function(){
         if($scope.CFacebook==false && $scope.CTwitter==false && $scope.CConocido==false &&             $scope.CParticipante==false && $scope.CEscuela==false && $scope.COtro==false){
             $scope.errorEnterado=true;
@@ -413,22 +439,50 @@ function MainCtrl($http) {
         }
     }
 
-    $scope.MostrarModa=function(){
-        var Contadora=0;
 
-        var Validar=[$scope.DPrendaVestir, $scope.DCalzado, $scope.DBolso, $scope.CPrendaVestir, $scope.CCalzado, $scope.CBackpack];
+//Mostrar Moda Se encarga de Revisar las modalidades
+ $scope.MostrarModa=function()
+{
+        var Contadora=0;
+      if($scope.DUAccesorio==false &&
+    $scope.DUMobiliario==false &&
+    $scope.DPrendaVestir==false&&
+    $scope.DCalzado==false &&
+    $scope.DBolso==false &&
+    $scope.CPrendaVestir==false &&
+    $scope.CCalzado==false &&
+    $scope.CBackpack==false &&
+    $scope.DUAccesorio==false&&
+    $scope.DUMobiliario==false){
+        $scope.erroModalidad=true;
+    }
+    if($scope.DUAccesorio==true ||
+        $scope.DUMobiliario==true ||
+        $scope.DPrendaVestir==true||
+        $scope.DCalzado==true ||
+        $scope.DBolso==true ||
+        $scope.CPrendaVestir==true ||
+        $scope.CCalzado==true ||
+        $scope.CBackpack==true ||
+        $scope.DUAccesorio==true||
+        $scope.DUMobiliario==true){
+            $scope.erroModalidad=false
+    }
+       var Validar=[$scope.DPrendaVestir, $scope.DCalzado, $scope.DBolso, $scope.CPrendaVestir, $scope.CCalzado, $scope.CBackpack];
 
         for(i=0; i<Validar.length; i++){
             if(Validar[i]==true){
                 Contadora++;
             }
             if(Contadora==5){
-                SweetAlert.swal("Máximo número de modalidades alcanzado", "Solo puede inscribirse hasta en 5 categorías de dama y caballero","warning");
+               
                 if(Validar[0]==false){
                     $scope.DPrendaVestirVisible=true;
+                
                 }
                 if(Validar[1]==false){
                     $scope.DCalzadoVisible=true;
+               
                 }
                 if(Validar[2]==false){
                     $scope.DBolsoVisible=true;
@@ -452,7 +506,7 @@ function MainCtrl($http) {
                 $scope.CBackpackVisible=false;
             }
         }
-    }
+}
 
     $scope.MostrarDi= function(){
         
@@ -476,43 +530,8 @@ function MainCtrl($http) {
             }
         }
     };
-    $scope.MostrarIC= function(){
-        if ($scope.IcSI==true) {
-            $scope.ICNOVisible=true;
-            $scope.errorInformacion=false;
-        }else{
-            if ($scope.IcNO==true) {
 
-                $scope.ICVisible=true;
-                $scope.errorInformacion=false;
-            }
-            else{
-                SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
-                $scope.errorInformacion=true;
-                $scope.ICNOVisible=false;
-                $scope.ICVisible=false;
-            }
-        }
-    };
-    $scope.MostrarIMM= function(){
-        
-        if ($scope.ImmSi==true) {
 
-            $scope.IMMNOVisible=true;
-            $scope.errorInformacion=false;
-        }else{
-            if ($scope.ImmNo==true) {
-                $scope.IMMVisible=true;
-                $scope.errorInformacion=false;
-            }
-            else{
-                SweetAlert.swal("Falta información", "Seleccione uno de los campos", "info");
-                $scope.errorInformacion=true;
-                $scope.IMMNOVisible=false;
-                $scope.IMMVisible=false;
-            }
-        }
-    };
     $scope.MostrarOtro= function(){
         if($scope.CFacebook==false && $scope.CTwitter==false && $scope.CConocido==false &&             $scope.CParticipante==false && $scope.CEscuela==false && $scope.COtro==false){
             $scope.errorEnterado=true;
@@ -525,7 +544,9 @@ function MainCtrl($http) {
             $scope.VistaOtro=true;
         }
     }
+
   //Llenado de los ComboBox con informacion de la base de datos
+
   $scope.ListaUniversidades= function(){
     $http.get('http://201.144.43.184/API.CREARE/Universidades/v1/GetUniversidadesCatalog')
       .success(function(Resultado){
@@ -534,7 +555,8 @@ function MainCtrl($http) {
       .error(function(err){
           console.log(err);
       })
-  }  
+  }
+        
     $scope.ListaPaises= function(){
         $scope.Mipais={};
         $http.get('http://201.144.43.184/API.Core/Paises/v1/GetPaisCatalog')
@@ -547,6 +569,7 @@ function MainCtrl($http) {
             console.log(err);
         })
     }
+
     $scope.ListaEstados= function(){
         $http.get('http://201.144.43.184/API.Core/Entidades/v1/GetEntidadCatalog')
         .success(function(Resultado){
@@ -562,6 +585,8 @@ function MainCtrl($http) {
         if($scope.ClaveCURP=="")
         {
                 $scope.ErrorCurp=true;
+                Terminado=false;
+                Mensaje+=" CURP\n ";
         }
         else
         {
@@ -577,12 +602,18 @@ function MainCtrl($http) {
             }
             else{
                 $scope.ErrorCurp=true;
+                Terminado=false;
+                Mensaje+=" CURP\n ";
                 SweetAlert.swal("No se localizaron datos para la CURP dada", "Verifica tu información", "error");
+                LimpiarDatos();
             }
              
           })
           .error(function(err){
             SweetAlert.swal("Espere un momento", "Sistema no disponible, intente nuevamente", "error");
+            Terminado=false;
+            Mensaje+=" CURP\n ";
+            LimpiarDatos();
             $scope.ErrorCurp=true;
           });
         }
@@ -599,26 +630,339 @@ $scope.ValidarCorreo = function (){
         console.log('email valido');
     }   
 }
+
 $scope.Checkcorreo = function ()
 {
     var letra= $scope.campoCorreo;
+    $scope.errorConfirmarCorreo=false;
     if(letra==$scope.campoCorreoVerificacion)
     {
         $scope.errorNoCoinciden=false;
+     
     }
     else
     {
         $scope.errorNoCoinciden=true; 
     }
 }
-$scope.registrarDatosforma = function () {
+$scope.moveCalle =function ()
+{
+    $scope.erroCalle=false; 
+}
+$scope.moveNumero= function()
+{
+    $scope.errorNumero=false;
+}
+
+$scope.moveColonia= function()
+{
+    $scope.errorColonia=false;
+}
+
+$scope.MoveMarca=function()
+{
+    $scope.errorMarca=false;
+}
+
+$scope.moveRFC=function()
+{
+    $scope.errorRFC=false;
+}
+var Terminado=true;
+var Mensaje="Faltan los datos de: ";
+
+
+//Funcion Alertas 
+function Alertnoty(Messages){
+    notify({ message: 'Verificar -'+Messages, classes: 'alert-danger', templateUrl: $scope.inspiniaTemplate});
+}
+
+
+ $scope.moveEsc =function ()
+ {
+     $scope.erroComboEsc=false;
+ }
+ 
+ $scope.moveMunicipio= function()
+ {
+$scope.errorMunicipio=false;
+
+ }
+ $scope.moveEscuela=function()
+ {
+    $scope.errorNEscuela=false;
+ }
+ 
+ $scope.moveName=function()
+ {
+$scope.erroNombre=false;
+ }
+
+ $scope.moveApPaterno=function()
+ {
+    $scope.errorApellidoPaterno=false;
+
+ }
+ $scope.moveApMaterno=function()
+ {
+
+    $scope.errorApellidoMaterno=false;
+ }
+
+ $scope.moveGender=function()
+ {
+    $scope.errorGenero=false;
+
+ }
+ $scope.moveDate=function()
+ {
+     $scope.errorFecha=false;
+ }
+function ValidarCampos() {
     
+        if($scope.MiOcupacion==undefined)
+        {
+            Terminado=false;
+            Mensaje+=" Ocupación"
+            //ValidacionOcupacion 
+            $scope.erroOcupacion=true;
+            Alertnoty("Campo Ocupación");      
+        }
+        else
+        {    
+            var Nacionalidad= $scope.Mipais.descripcion;
+            var Tipo = $scope.MiOcupacion.nombre; 
+
+        //ESTUDIANTE MEXICANO
+        if(Nacionalidad=="Mexico" && Tipo=="Estudiante")
+        {    
+ 
+           UniversidadCheck();
+           CheckModalidades();
+           RevisarCurp();
+           Contacto();
+           ResidencialData();
+           CheckComoTeEnteraste();
+           CheckInformacion();
+  
+        }
+            //Diseñador MEXICANO
+        if(Nacionalidad=="Mexico"&&Tipo=="Diseñador")
+        {
+            VerificarMarcaRfc();
+            CheckModalidades();
+            RevisarCurp();
+            Contacto();
+            ResidencialData();
+            CheckComoTeEnteraste();
+            CheckInformacion();
+        }
+
+
+if(Nacionalidad!="Mexico"&&Tipo=="Estudiante")
+{
+    ValidarEscuela();
+    DataPersonal();
+    CheckModalidades();
+    ResidencialData();
+    Contacto();
+    CheckComoTeEnteraste();
+    CheckInformacion();
+
+}
+if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
+{
+    VerificarMarcaRfc();
+    DataPersonal();
+    CheckModalidades();
+    ResidencialData();
+    Contacto();
+    CheckComoTeEnteraste();
+    CheckInformacion();
+}     
+    }   
+   //Validaciones 
+   function CheckModalidades()
+   {
+       if($scope.DUAccesorio==false && 
+           $scope.DUMobiliario==false && 
+           $scope.DPrendaVestir==false &&
+           $scope.DCalzado==false &&
+           $scope.DBolso==false &&
+           $scope.CPrendaVestir==false &&
+           $scope.CCalzado==false && 
+           $scope.CBackpack==false &&
+           $scope.DUAccesorio==false&&
+           $scope.DUMobiliario==false){
+             Alertnoty("Modalidades");      
+          
+               $scope.erroModalidad=true;
+           }
+   }    
+   function UniversidadCheck()
+   {
+       if($scope.Miuniversidad=="")
+       {
+           Terminado=false;
+           $scope.erroComboEsc=true;
+           Alertnoty("Seleccione Univesidad");      
+        }
+   
+   }
+   function RevisarCurp()
+   {
+       if($scope.ClaveCURP==undefined ||$scope.ClaveCURP=="")
+       {
+           Alertnoty("Falta Curp");      
+           $scope.ErrorCurp=true;
+       }
+
+   }
+   function Contacto()
+   {
+       if($scope.campoCorreo==undefined ||$scope.campoCorreo=="")
+       { 
+           Alertnoty("Falta Correo");     
+           $scope.errorCorreo=true;
+       }
+       if($scope.campoCorreoVerificacion==undefined || $scope.campoCorreoVerificacion=="")
+       { 
+        Alertnoty("Falta Confirmacion Correo");    
+           $scope.errorConfirmarCorreo=true;
+       }
+   }
+   function ResidencialData()
+   {
+       var al=0;
+       if($scope.campoCalle==undefined || $scope.campoCalle=="")
+       { 
+           $scope.erroCalle=true;
+           al=1;
+       }
+       if($scope.campoNumero==undefined || $scope.campoNumero=="")
+       { 
+           $scope.errorNumero=true;
+           al=1;
+       }
+
+       if($scope.campoColonia==undefined || $scope.campoColonia=="")
+       { 
+           $scope.errorColonia=true;
+           al=1;
+       }
+       
+       if($scope.Miestado==undefined || $scope.Miestado=="")
+       { 
+           $scope.errorEstado=true;
+           al=1;
+       }
+       if($scope.Mimunicipio==undefined || $scope.Mimunicipio=="")
+       { 
+           $scope.errorMunicipio=true;
+           al=1;
+       }
+       if(al==1)
+       {
+        Alertnoty("Falta Datos Recidenciales");    
+       }
+   }
+   function CheckComoTeEnteraste()
+   {
+       if($scope.CFacebook==false && $scope.CTwitter==false && $scope.CConocido==false &&             $scope.CParticipante==false && $scope.CEscuela==false && $scope.COtro==false){
+           Alertnoty("La manera como te enteraste");    
+           $scope.errorEnterado=true;
+       }
+   }
+   function CheckInformacion()
+   {
+    alert("Informacion");
+
+    //no hace la comparacion 
+        if($scope.IcSI==false && $scope.IcNO==false )
+        {
+            $scope.errorEnterado=true;
+        }
+        if( $scope.ImmSi==false && $scope.ImmNo==false)
+        {
+         $scope.errorEnterado=true;
+
+       }
+
+   }
+   function VerificarMarcaRfc()
+   {
+     var som=0;
+    if($scope.marca==undefined || $scope.marca==""){
+          som=1;
+       $scope.errorMarca=true;
+       }
+       if($scope.RFC==undefined || $scope.RFC==""){
+           $scope.errorRFC=true;
+           som=1;
+       } 
+       if(som==1)
+       {
+        Alertnoty("Campos De Marca");    
+       }
+   }
+    function ValidarEscuela()
+    {
+        if($scope.NombreEscuela==undefined || $scope.NombreEscuela=="")
+        {
+         Alertnoty("Nombre Institucion");   
+         $scope.errorNEscuela=true; 
+
+          }
+    }
+
+   function DataPersonal()
+   {
+       var some=0;
+      if($scope.campoNombre==undefined || $scope.campoNombre=="")
+      { 
+       $scope.erroNombre=true;
+       some=1;
+      }
+      if($scope.campoApellidoPaterno==undefined || $scope.campoApellidoPaterno=="")
+      { 
+          $scope.errorApellidoPaterno=true;
+          some=1;
+      }
+      if($scope.campoApellidoMaterno==undefined ||$scope.campoApellidoMaterno=="")
+      { 
+          $scope.errorApellidoMaterno=true;
+          some=1;
+      }
+      if($scope.sampleDate==undefined || $scope.sampleDate=="")
+      { 
+          $scope.errorFecha=true;
+          some=1;
+      }
+      if($scope.campoSexo==undefined || $scope.campoSexo=="")
+      { 
+          $scope.errorGenero=true;
+          some=1;
+      }
+      if(some==1)
+      {
+        Alertnoty("Datos Personales");   
+      }
+
+   }
+};
+
+$scope.registrarDatosforma = function () {
+
+    ValidarCampos();
+    if($scope.ClaveCURP==""||$scope.ClaveCURP==undefined){
+        Terminado=false;
+    }
+    if(Terminado==true){
     //Verificar que el Correo este escrito correctamente con el correo de verificación
     if($scope.campoCorreo!= $scope.campoCorreoVerificacion){
 
         $scope.errorCorreo=true;
         SweetAlert.swal("Error", "Verificar que su correo sea válido", "warning");
-
     }
     //Una vez revisado esto, se procede a averiguar si no hay un registro previo usando la CURP y/o Correo como medios de verificacion
     else{
@@ -646,17 +990,16 @@ $scope.registrarDatosforma = function () {
                     showLoaderOnConfirm: true },
                 function (isConfirm) {
                     if (isConfirm) {
-
                         $http({
                             url: "http://201.144.43.184/API.CREARE/Registro/v1/AddRegistro",
                             method: "POST",
                             data: {
                                 pai_Id: $scope.Mipais.keyID,
-                                reg_Tipo : $scope.MiOcupacion.Id_Ocupacion,
+                                reg_Tipo : ($scope.MiOcupacion.Id_Ocupacion=="1"? true : false),
                                 reg_NombreMarca : $scope.marca,
                                 reg_RFC : $scope.campoRFC,
                                 reg_Institución : $scope.Miuniversidad.univ_ID,
-                                reg_UnivEscrita: $scope.NombreEscuela,
+                                reg_UnivEscrita: ($scope.MiOcupacion.Id_Ocupacion=="0" && $scope.Mipais.keyID!="700" ? $scope.NombreEscuela : $scope.Miuniversidad.univ_Nombre),
                                 reg_BolsoDama : $scope.DBolso,
                                 reg_BackpackCaballero : $scope.CBackpack,
                                 reg_PrendaDama : $scope.DPrendaVestir,
@@ -687,8 +1030,8 @@ $scope.registrarDatosforma = function () {
                                 reg_Escuela : $scope.CEscuela,
                                 reg_Otro : $scope.COtro,
                                 reg_OtroDescripcion : $scope.ODescripcion,
-                                reg_InfoCREARE : $scope.btnCREARE,
-                                reg_InfoMesModa : $scope.btnModa
+                                reg_InfoCREARE : ($scope.Ic==true?true:false),
+                                reg_InfoMesModa : ($scope.Imm==true?true:false) 
                             },
                         }).then(function successCallback(response) {
 
@@ -701,7 +1044,9 @@ $scope.registrarDatosforma = function () {
                                     SweetAlert.swal("Error", "Por el momento el sistema no esta disponible, intente más tarde", "error");
                                   });
 
-                            console.log(response.data);
+
+                                $location.path('/login_two_columns');
+                                  console.log(response.data);
         
                             },function errorCallback(response) {
                                 $scope.error = response.statusText;
@@ -721,6 +1066,10 @@ $scope.registrarDatosforma = function () {
         });
     }
 
+    }
+    else{
+        SweetAlert.swal("Falta información", Mensaje, "warning")
+    }
     
 }
 
@@ -762,6 +1111,7 @@ function LimpiarDatos(){
         $scope.campoSexo="";
         $scope.sampleDate="";
         $scope.NombreEscuela="";
+        $scope.ClaveCURP="";
 };
 
 function Activar()
@@ -838,6 +1188,11 @@ function DiseñadorExtranjero()
 
     $scope.SleccionOcupacion = function() 
     {
+        if($scope.MiOcupacion!=undefined)
+        {
+            $scope.erroOcupacion=false;
+        }
+ 
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.descripcion;
@@ -930,7 +1285,10 @@ function DiseñadorExtranjero()
         }
     }
 
+
       $scope.ListaMunicipios= function(){
+
+        $scope.errorEstado=false;
           $http.get('http://201.144.43.184/API.Core/Municipios/v1/GetMunicipioByParentEntity/' + $scope.Miestado.keyID)
           .success(function(Resultado){
               $scope.Municipios=Resultado;
@@ -2749,33 +3107,7 @@ function ngGridCtrl($scope) {
 /**
  * notifyCtrl - Controller angular notify
  */
-function notifyCtrl($scope, notify) {
-    $scope.msg = 'Hello! This is a sample message!';
-    $scope.demo = function () {
-        notify({
-            message: $scope.msg,
-            classes: $scope.classes,
-            templateUrl: $scope.template
-        });
-    };
-    $scope.closeAll = function () {
-        notify.closeAll();
-    };
 
-    $scope.inspiniaTemplate = 'views/common/notify.html';
-    $scope.inspiniaDemo1 = function(){
-        notify({ message: 'Info - This is a Inspinia info notification', classes: 'alert-info', templateUrl: $scope.inspiniaTemplate});
-    }
-    $scope.inspiniaDemo2 = function(){
-        notify({ message: 'Success - This is a Inspinia success notification', classes: 'alert-success', templateUrl: $scope.inspiniaTemplate});
-    }
-    $scope.inspiniaDemo3 = function(){
-        notify({ message: 'Warning - This is a Inspinia warning notification', classes: 'alert-warning', templateUrl: $scope.inspiniaTemplate});
-    }
-    $scope.inspiniaDemo4 = function(){
-        notify({ message: 'Danger - This is a Inspinia danger notification', classes: 'alert-danger', templateUrl: $scope.inspiniaTemplate});
-    }
-}
 
 /**
  * translateCtrl - Controller for translate
