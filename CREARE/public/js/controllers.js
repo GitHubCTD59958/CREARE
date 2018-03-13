@@ -1,84 +1,4 @@
-/**
- * INSPINIA - Responsive Admin Theme
- *
- * Main controller.js file
- * Define controllers with data used in Inspinia theme
- *
- * Functions (controllers)
- *  - MainCtrl
- *  - dashboardFlotOne
- *  - dashboardFlotTwo
- *  - dashboardFlotFive
- *  - dashboardMap
- *  - flotChartCtrl
- *  - rickshawChartCtrl
- *  - sparklineChartCtrl
- *  - widgetFlotChart
- *  - modalDemoCtrl
- *  - ionSlider
- *  - wizardCtrl
- *  - CalendarCtrl
- *  - chartJsCtrl
- *  - GoogleMaps
- *  - ngGridCtrl
- *  - codeEditorCtrl
- *  - nestableCtrl
- *  - notifyCtrl
- *  - translateCtrl
- *  - imageCrop
- *  - diff
- *  - idleTimer
- *  - liveFavicon
- *  - formValidation
- *  - agileBoard
- *  - draggablePanels
- *  - chartistCtrl
- *  - metricsCtrl
- *  - sweetAlertCtrl
- *  - selectCtrl
- *  - toastrCtrl
- *  - loadingCtrl
- *  - datatablesCtrl
- *  - truncateCtrl
- *  - touchspinCtrl
- *  - tourCtrl
- *  - jstreeCtrl
- *  - datamapsCtrl
- *  - pdfCtrl
- *  - passwordMeterCtrl
- *
- */
-
-/**
- * MainCtrl - controller
- * Contains several global data used in different view
- *
- */
 function MainCtrl($http) {
-
-    /**
-     * countries - Used as duallistbox in form advanced view
-     */
-
-    this.countries = [
-        { name: 'Amsterdam' },
-        { name: 'Washington' },
-        { name: 'Sydney' },
-        { name: 'Cairo' },
-        { name: 'Beijing' }];
-
-    this.getLocation = function(val) {
-        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-            params: {
-                address: val,
-                sensor: false
-            }
-        }).then(function(response){
-            return response.data.results.map(function(item){
-                return item.formatted_address;
-            });
-        });
-    };
 
     /**
      * daterange - Used as initial model for data range picker in Advanced form view
@@ -102,62 +22,7 @@ function MainCtrl($http) {
         { text: 'Beijing' }
     ];
 
-    /**
-     * states - Data used in Advanced Form view for Chosen plugin
-     */
-    this.states = [
-        'Alabama',
-        'Alaska',
-        'Arizona',
-        'Arkansas',
-        'California',
-        'Colorado',
-        'Connecticut',
-        'Delaware',
-        'Florida',
-        'Georgia',
-        'Hawaii',
-        'Idaho',
-        'Illinois',
-        'Indiana',
-        'Iowa',
-        'Kansas',
-        'Kentucky',
-        'Louisiana',
-        'Maine',
-        'Maryland',
-        'Massachusetts',
-        'Michigan',
-        'Minnesota',
-        'Mississippi',
-        'Missouri',
-        'Montana',
-        'Nebraska',
-        'Nevada',
-        'New Hampshire',
-        'New Jersey',
-        'New Mexico',
-        'New York',
-        'North Carolina',
-        'North Dakota',
-        'Ohio',
-        'Oklahoma',
-        'Oregon',
-        'Pennsylvania',
-        'Rhode Island',
-        'South Carolina',
-        'South Dakota',
-        'Tennessee',
-        'Texas',
-        'Utah',
-        'Vermont',
-        'Virginia',
-        'Washington',
-        'West Virginia',
-        'Wisconsin',
-        'Wyoming'
-    ];
-
+    
     /**
      * check's - Few variables for checkbox input used in iCheck plugin. Only for demo purpose
      */
@@ -764,8 +629,8 @@ function ValidarCampos() {
 
         //ESTUDIANTE MEXICANO
         if(Nacionalidad=="Mexico" && Tipo=="Estudiante")
-        {    
- 
+        {   
+            
            UniversidadCheck();
            CheckModalidades();
            RevisarCurp();
@@ -773,11 +638,10 @@ function ValidarCampos() {
            ResidencialData();
            CheckComoTeEnteraste();
            CheckInformacion();
-  
-        }
+        }else
             //Diseñador MEXICANO
         if(Nacionalidad=="Mexico"&&Tipo=="Diseñador")
-        {
+        { 
             VerificarMarcaRfc();
             CheckModalidades();
             RevisarCurp();
@@ -785,8 +649,7 @@ function ValidarCampos() {
             ResidencialData();
             CheckComoTeEnteraste();
             CheckInformacion();
-        }
-
+        }else
 
 if(Nacionalidad!="Mexico"&&Tipo=="Estudiante")
 {
@@ -799,8 +662,10 @@ if(Nacionalidad!="Mexico"&&Tipo=="Estudiante")
     CheckInformacion();
 
 }
+else
 if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
 {
+ 
     VerificarMarcaRfc();
     DataPersonal();
     CheckModalidades();
@@ -939,7 +804,6 @@ if(  Nacionalidad!="Mexico" && Tipo!="Estudiante" )
 
           }
     }
-
    function DataPersonal()
    {
        var some=0;
@@ -1113,7 +977,6 @@ $scope.registrarDatosforma = function () {
         nombre: 'Diseñador'
           }
       ];
-
       //Inicializar los controladores Deshabilitados
       $scope.desNombre=true;$scope.desApPaterno=true;
       $scope.desApMaterno=true;$scope.desFecha=true;
@@ -1217,7 +1080,6 @@ function DiseñadorExtranjero()
         {
             $scope.erroOcupacion=false;
         }
- 
         $scope.expresion=true;
         var Seleccion=$scope.MiOcupacion.nombre;
         var Seleccion2=$scope.Mipais.descripcion;
